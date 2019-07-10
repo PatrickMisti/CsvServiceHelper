@@ -1,0 +1,18 @@
+{
+  "name": "csvservicehelper",
+  "version": "0.1.0",
+  "description": "This program should help to import csv easier",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Patrick Mistlberger",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^5.0.6"
+  },
+  "dependencies": {
+    "electron-reload": "^1.4.0",
+    "electron-tabs": "^0.9.5"
+  }
+}
