@@ -8,10 +8,14 @@ var url = require("url");
 //   return val === '--serve';
 //
 // });
+require('electron-reload')(__dirname,{
+  electron: path.join(__dirname,'node_modules','.bin','electron'),
+  hardResetMethod: 'exit'
+});
 
 let win = null;
 function createWindow () {
-  win = new BrowserWindow({ width: 1200, height: 800 });
+  win = new BrowserWindow({ width: 1300, height: 900 });
 
   win.loadURL(
     url.format({
@@ -21,18 +25,6 @@ function createWindow () {
     })
   );
 
-  // if (serve){
-  //   require('electron-reload')(__dirname,{
-  //     electron: require(__dirname + "/node_modules/electron")
-  //   });
-  //   win.loadURL('http://localhost:4200');
-  // }else {
-  //   win.loadURL(url.format({
-  //     pathname: path.join(__dirname, 'dist/index.html'),
-  //     protocol: 'file:',
-  //     slashes: true
-  //   }));
-  // }
 
 
   win.loadFile(`./dist/csvhelper/index.html`);
