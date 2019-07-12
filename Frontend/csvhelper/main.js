@@ -1,13 +1,39 @@
 const { app, BrowserWindow } = require('electron');
 const electron = require('electron');
+var path = require("path");
+var url = require("url");
 
-require('electron-reload')(__dirname, {
-  electron: require(`${__dirname}/node_modules/electron`)
-});
+
+// serve = args.some(function (val) {
+//   return val === '--serve';
+//
+// });
 
 let win = null;
 function createWindow () {
   win = new BrowserWindow({ width: 1200, height: 800 });
+
+  win.loadURL(
+    url.format({
+      pathname: path.join(__dirname, `/dist/index.html`),
+      protocol: "file:",
+      slashes: true
+    })
+  );
+
+  // if (serve){
+  //   require('electron-reload')(__dirname,{
+  //     electron: require(__dirname + "/node_modules/electron")
+  //   });
+  //   win.loadURL('http://localhost:4200');
+  // }else {
+  //   win.loadURL(url.format({
+  //     pathname: path.join(__dirname, 'dist/index.html'),
+  //     protocol: 'file:',
+  //     slashes: true
+  //   }));
+  // }
+
 
   win.loadFile(`./dist/csvhelper/index.html`);
   win.webContents.openDevTools();
