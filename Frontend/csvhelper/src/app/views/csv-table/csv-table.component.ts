@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-csv-table',
@@ -18,28 +17,30 @@ export class CsvTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.csvFile);
-    console.log('changes');
     if (this.csvFile) {
-      this.tableData = this.csvFile.split('\n').pop();
-      console.log(this.tableData);
-
+      this.tableData = this.csvFile.split('\n');
+      this.tableData.pop();
+      this.generateCode();
     }
 
 
   }
 
   generateCode() {
-    const codGen = document.getElementById('codeGen');
-    var gen = document.createElement('div');
+    const codGen = document.getElementById('table');
+    const tableRow = document.createElement('tbody');
     for (const it of this.tableData) {
-      var snipper;
-      for (const item of it.split(',')) {
-        snipper = document.createElement('td');
-        snipper.appendText(item);
-        
-      }
+      const trBuilder = document.createElement('tr');
+      const colm = it.split(',');
+      colm.map(e => {
+        const tdBuilder = document.createElement('td');
+        tdBuilder.innerText = e;
+        trBuilder.appendChild(tdBuilder);
+      });
+      tableRow.appendChild(trBuilder);
     }
+    console.log(tableRow);
+    codGen.innerHTML = '';
+    codGen.appendChild(tableRow);
   }
-
 }
