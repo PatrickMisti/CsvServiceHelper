@@ -25,6 +25,7 @@ export class CsvReaderComponent implements OnInit {
     reader.readAsText(event.target.files[0]);
     reader.onload = () => {
       this.csvData = reader.result;
+      console.log(this.csvData);
     };
   }
 }
