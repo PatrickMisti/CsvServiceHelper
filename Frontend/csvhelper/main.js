@@ -15,7 +15,7 @@ require('electron-reload')(__dirname,{
 
 let win = null;
 function createWindow () {
-  win = new BrowserWindow({ width: 1300, height: 900 });
+  win = new BrowserWindow({ width: 1600, height: 900 });
 
   win.loadURL(
     url.format({

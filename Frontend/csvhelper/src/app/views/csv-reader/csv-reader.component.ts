@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class CsvReaderComponent implements OnInit {
 
   resultPath = '';
+  csvData: string | ArrayBuffer;
   constructor() { }
 
   ngOnInit() {
@@ -18,20 +19,12 @@ export class CsvReaderComponent implements OnInit {
   }
 
   chosenFile(event) {
-    console.log(event.target.formAction + '' + event.target.value);
-    const path = event.target.formAction.split('///');
-    const filename = event.target.value.split('\\');
+    this.resultPath = event.target.files[0].path;
 
-
-    const test = document.getElementById('filePicker');
-
-    this.resultPath = joiner(filename[0], path[1], filename[2]);
-    console.log(test);
+    const reader = new FileReader();
+    reader.readAsText(event.target.files[0]);
+    reader.onload = () => {
+      this.csvData = reader.result;
+    };
   }
-
-}
-function joiner(local, path, filename) {
-  const fullCuttedPath = Array.prototype.join.call(arguments).replace(/,/i, '//').replace(/,/g, '');
-  console.log(fullCuttedPath);
-  return fullCuttedPath;
 }

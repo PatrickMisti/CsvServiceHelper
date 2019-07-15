@@ -1,6 +1,6 @@
 <div>
   <div class="container container-styling">
-    <div class="form-control card-styling">
+    <div class="form-control row card-styling">
       <div class="col-md-4  row element-styling">
         <button class="btn btn-styling" (click)="fileDialogOpen()">Datei auswählen</button>
         <input id="fileDialog" type="file" hidden style="display: none" (change)="chosenFile($event)">
@@ -9,5 +9,8 @@
         <input [(ngModel)]="resultPath" id="filePicker" class="input-styling" type="text">
       </div>
     </div>
+  </div>
+  <div class="table-point-style">
+    <app-csv-table [csvFile]="csvData"></app-csv-table>
   </div>
 </div>
