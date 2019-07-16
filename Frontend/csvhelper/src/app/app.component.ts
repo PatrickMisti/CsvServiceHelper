@@ -23,4 +23,14 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  deleteTable() {
+    const table = document.querySelector('#table');
+    const filePicker = document.querySelector('#filePicker');
+    table.innerHTML = '';
+    // filePicker.nodeValue = '';
+    alert('Erfolgreich gelöscht');
+  }
+
+  safeTable() {
+  }
 }

@@ -1,11 +1,14 @@
-<router-outlet></router-outlet>
-<div class="body-style">
-  <div class="share">
-    <div class="toggle"></div>
-    <ul>
-      <li><a class="trash" href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-    </ul>
+<div>
+  <router-outlet></router-outlet>
+  <div class="body-style">
+    <div class="share" draggable="true">
+      <div class="toggle"></div>
+      <ul>
+        <li><a class="trash" href="#" (click)="deleteTable()"></a></li>
+        <li><a class="reply" href="#"></a></li>
+        <li><a class="checked" href="#" (click)="safeTable()"></a></li>
+      </ul>
+    </div>
   </div>
 </div>
+
