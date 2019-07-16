@@ -20,10 +20,27 @@ export class CsvTableComponent implements OnInit, OnChanges {
     if (this.csvFile) {
       this.tableData = this.csvFile.split('\n');
       this.tableData.pop();
+      this.generateHeadCode();
       this.generateCode();
     }
 
 
+  }
+
+  generateHeadCode() {
+    const tableHead = this.tableData[1];
+    const colm = tableHead.split(',').length;
+    const table = document.getElementById('table');
+    const tableHeadBuilder = document.createElement('thead');
+    const tableHeadRow = document.createElement('tr');
+
+    console.log(colm);
+    for (let i = 0; i < colm; i++) {
+      const tableColumn = document.createElement('td');
+      tableHeadRow.appendChild(tableColumn);
+    }
+    tableHeadBuilder.appendChild(tableHeadRow);
+    table.appendChild(tableHeadBuilder);
   }
 
   generateCode() {
@@ -40,7 +57,7 @@ export class CsvTableComponent implements OnInit, OnChanges {
       tableRow.appendChild(trBuilder);
     }
     console.log(tableRow);
-    codGen.innerHTML = '';
+    // codGen.innerHTML = '';
     codGen.appendChild(tableRow);
   }
 }
