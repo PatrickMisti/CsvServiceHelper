@@ -1,4 +1,4 @@
-enum Article {
+enum ArticleEnum {
   DLTCountryCode = 1,
   SupplyId = 2,
   ModalName = 3,
