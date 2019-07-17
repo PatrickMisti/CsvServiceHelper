@@ -1,7 +1,20 @@
 <div>
   <div class="container container-styling">
     <table id="table" class="table table-bordered">
-      <thead>
+      <thead *ngIf="tableData != null && tableData != ''">
+        <tr>
+          <td *ngFor="let it of tableData[0].split(',')">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle button-dropdown-style" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#"></a>
+              </div>
+            </div>
+          </td>
+        </tr>
       </thead>
     </table>
   </div>

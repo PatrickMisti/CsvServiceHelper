@@ -1,11 +1,11 @@
 <div>
   <div class="container container-styling">
-    <div class="form-control row card-styling">
-      <div class="col-md-4  row element-styling">
+    <div class="form-control card-styling">
+      <div class="col-lg-3 element-styling">
         <button class="btn btn-styling" (click)="fileDialogOpen()">Datei auswählen</button>
         <input id="fileDialog" type="file" hidden style="display: none" (change)="chosenFile($event)">
       </div>
-      <div class="col-md-8 row element-styling">
+      <div class="col-md-8 element-styling">
         <input [(ngModel)]="resultPath" id="filePicker" class="input-styling" type="text" disabled>
       </div>
     </div>

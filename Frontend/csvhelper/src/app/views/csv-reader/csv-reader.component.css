@@ -3,11 +3,11 @@
 }
 .card-styling {
   min-height: 10vh;
+  display: flex;
 }
 .element-styling {
   height: 100%;
   text-align: center;
-  vertical-align: center;
 }
 .form-styling {
   margin-top: 10%;
@@ -29,6 +29,8 @@
   font-size: 18px;
   font-weight: bold;
   border-radius: 30px;
+  background: darkorange;
+  color: #000;
 }
 /*.table-point-style {
   top: 40%;
