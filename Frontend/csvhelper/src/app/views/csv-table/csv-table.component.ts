@@ -20,11 +20,11 @@ export class CsvTableComponent implements OnInit, OnChanges {
     if (this.csvFile) {
       this.tableData = this.csvFile.split('\n');
       this.tableData.pop();
-      this.generateCode();
+      // this.generateCode();
     }
   }
 
-  generateCode() {
+  /*generateCode() {
     const codGen = document.getElementById('table');
     const tableRow = document.createElement('tbody');
     for (const it of this.tableData) {
@@ -38,5 +38,5 @@ export class CsvTableComponent implements OnInit, OnChanges {
       tableRow.appendChild(trBuilder);
     }
     codGen.appendChild(tableRow);
-  }
+  }*/
 }
