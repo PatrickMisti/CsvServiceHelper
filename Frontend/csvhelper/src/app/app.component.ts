@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
     const table = document.querySelector('#table');
     const filePicker = document.querySelector('#filePicker');
     table.innerHTML = '';
+    table.parentNode.removeChild(table);
+    filePicker.textContent = '';
     // filePicker.nodeValue = '';
     alert('Erfolgreich gelöscht');
   }

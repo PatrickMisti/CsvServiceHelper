@@ -20,7 +20,7 @@ export class CsvReaderComponent implements OnInit {
 
   chosenFile(event) {
     this.resultPath = event.target.files[0].path;
-
+    this.csvData = null;
     const reader = new FileReader();
     reader.readAsText(event.target.files[0]);
     reader.onload = () => {

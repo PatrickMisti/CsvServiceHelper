@@ -17,26 +17,15 @@ export class CsvTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
+    console.log('changes');
+    this.tableData = '';
     if (this.csvFile) {
       this.tableData = this.csvFile.split('\n');
       this.tableData.pop();
-      // this.generateCode();
+    } else {
+      console.log('no change');
     }
+    this.csvFile = '';
   }
-
-  /*generateCode() {
-    const codGen = document.getElementById('table');
-    const tableRow = document.createElement('tbody');
-    for (const it of this.tableData) {
-      const trBuilder = document.createElement('tr');
-      const colm = it.split(',');
-      colm.map(e => {
-        const tdBuilder = document.createElement('td');
-        tdBuilder.innerText = e;
-        trBuilder.appendChild(tdBuilder);
-      });
-      tableRow.appendChild(trBuilder);
-    }
-    codGen.appendChild(tableRow);
-  }*/
 }
