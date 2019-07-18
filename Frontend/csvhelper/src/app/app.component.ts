@@ -25,14 +25,23 @@ export class AppComponent implements OnInit {
   }
   deleteTable() {
     const table = document.querySelector('#table');
-    const filePicker = document.querySelector('#filePicker');
-    table.innerHTML = '';
-    table.parentNode.removeChild(table);
-    filePicker.textContent = '';
-    // filePicker.nodeValue = '';
-    alert('Erfolgreich gelöscht');
+    // var filePicker = document.querySelector('#filePicker');
+    if (table != null) {
+      table.innerHTML = '';
+      table.parentNode.removeChild(table);
+      // filePicker.value = '';
+      // filePicker.nodeValue = '';
+      alert('Erfolgreich gelöscht');
+    } else {
+      alert('Es wurde noch kein File eingelesen');
+    }
+  }
+
+  deleteSelectedRows() {
+
   }
 
   safeTable() {
+    alert('Daten sind gespeichert worden!!!');
   }
 }

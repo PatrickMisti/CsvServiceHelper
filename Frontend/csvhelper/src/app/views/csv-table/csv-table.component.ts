@@ -1,7 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {forEach} from '@angular/router/src/utils/collection';
 import {ArticleEnum} from '../../article.enum';
-import {toArray} from 'rxjs/operators';
 
 @Component({
   selector: 'app-csv-table',
@@ -14,6 +12,7 @@ export class CsvTableComponent implements OnInit, OnChanges {
   @Input() csvFile = '';
   tableData = null;
   articles = [];
+  chosenArticle = '';
   counter = 0;
   // splitter = '';
 
@@ -46,13 +45,9 @@ export class CsvTableComponent implements OnInit, OnChanges {
     this.csvFile = '';
   }
 
-  setButtonId() {
-    this.counter++;
-    return this.counter;
-
-  }
-
-  setParamsForDataBase(article) {
+  setParamsForDataBase(article, btn) {
+    this.chosenArticle = article;
+    document.getElementById(btn).innerText = this.chosenArticle;
     console.log(article);
 
     /*if (this.article.length < counter) {
@@ -61,5 +56,14 @@ export class CsvTableComponent implements OnInit, OnChanges {
       this.counter++;
     }
     console.log(counter);*/
+  }
+
+  getButtonArticle(getId) {
+    const chosen = document.getElementById(getId.toString());
+    if (chosen == null) {
+      this.chosenArticle = this.articles[0];
+      return this.chosenArticle;
+    }
+    return this.chosenArticle;
   }
 }

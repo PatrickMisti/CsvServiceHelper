@@ -1,4 +1,5 @@
 export enum ArticleEnum {
+  Auswahl,
   DLTCountryCode,
   SupplyId,
   ModalName,
