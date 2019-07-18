@@ -5,7 +5,7 @@
         <tr>
           <td style="visibility: hidden"></td>
           <td class="dropdown" *ngFor="let it of tableData[0].split(';');let i = index;">
-            <button [id]="'ddBtn' + i" class="dropbtn btn-secondary dropdown-toggle" role="">{{articles[0]}}</button>
+            <button [id]="'ddBtn' + i" class="dropbtn btn-secondary dropdown-toggle">{{articles[0]}}</button>
             <ul class="dropdown-content">
               <li *ngFor="let it of articles"  (click)="setParamsForDataBase(it,'ddBtn' + i)">
                 <ng-container *ngIf="it != getButtonArticle('ddBtn' + i)">
