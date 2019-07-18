@@ -3,29 +3,18 @@
     <table id="table" class="table table-bordered" *ngIf="tableData != null && tableData != ''">
       <thead>
         <tr>
-          <td *ngFor="let it of tableData[0].split(';')">
-            <div class="dropdown">
-              <button class="dropbtn">Auswahl</button>
-              <div class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-              </div>
-            </div>
-            <!--<div class="dropdown">
-              <button id="ddBtn" role="button" class="btn dropdown-toggle btn-secondary button-dropdown-style" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </button>
-              <div class="dropdown-menu" aria-labelledby="ddBtn">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another Action</a>
-              </div>
-            </div>-->
+          <td style="visibility: hidden"></td>
+          <td class="dropdown" *ngFor="let it of tableData[0].split(';');let i = index;">
+            <button [id]="'ddBtn' + i" class="dropbtn btn-secondary dropdown-toggle">Auswahl</button>
+            <ul class="dropdown-content">
+              <li *ngFor="let it of articles" (click)="setParamsForDataBase(it)">{{it}}</li>
+            </ul>
           </td>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of tableData">
+          <td><input type="checkbox"></td>
           <td *ngFor="let it of item.split(';')">
             {{it}}
           </td>

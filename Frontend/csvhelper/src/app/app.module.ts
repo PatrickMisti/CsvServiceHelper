@@ -7,12 +7,14 @@ import { CsvReaderComponent } from './views/csv-reader/csv-reader.component';
 import {FormsModule} from '@angular/forms';
 import {CsvTableComponent} from './views/csv-table/csv-table.component';
 import { NgxPopper } from 'angular-popper';
+import { VarDirective } from './ng-var.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     CsvReaderComponent,
-    CsvTableComponent
+    CsvTableComponent,
+    VarDirective
   ],
   imports: [
     BrowserModule,
