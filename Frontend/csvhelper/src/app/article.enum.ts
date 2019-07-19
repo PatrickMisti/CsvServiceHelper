@@ -1,7 +1,8 @@
 export enum ArticleEnum {
-  Auswahl,
+  'Nicht Übernehmen',
   DLTCountryCode,
   SupplyId,
+  Brand,
   ModalName,
   ShortDesc,
   LongDesc,

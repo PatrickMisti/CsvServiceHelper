@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {DataTableService} from './service/data-table.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,8 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
   active = false;
+
+  constructor(private data: DataTableService) {}
 
   ngOnInit(): void {
     const toggle = document.querySelector('.toggle');
@@ -23,6 +26,8 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+
   deleteTable() {
     const table = document.querySelector('#table');
     // var filePicker = document.querySelector('#filePicker');
@@ -38,7 +43,27 @@ export class AppComponent implements OnInit {
   }
 
   deleteSelectedRows() {
+    const table = document.querySelector('#table');
 
+    let counter = 0;
+    let item;
+    // let tableData = [];
+    if (table != null) {
+      // this.data.getTable().subscribe(datas => tableData = datas);
+      item = document.querySelector('#row' + counter);
+      while (item != null) {
+        if (counter !== 0) {
+          item = document.querySelector('#row' + counter);
+        }
+        if (item.checked === true) {
+          // tableData.splice(counter, 1);
+          item.parentNode.removeChild(item);
+        }
+        counter++;
+      }
+      // this.data.setTable(tableData);
+    }
+    // console.log(tableData);
   }
 
   safeTable() {

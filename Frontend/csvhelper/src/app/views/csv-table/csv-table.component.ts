@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ArticleEnum} from '../../article.enum';
+import {DataTableService} from '../../service/data-table.service';
 
 @Component({
   selector: 'app-csv-table',
@@ -7,16 +8,13 @@ import {ArticleEnum} from '../../article.enum';
   styleUrls: ['./csv-table.component.css']
 })
 export class CsvTableComponent implements OnInit, OnChanges {
-
-  constructor() { }
   @Input() csvFile = '';
   tableData = null;
   articles = [];
-  chosenArticle = '';
-  counter = 0;
+  dV = document;
   // splitter = '';
 
-
+  constructor(private data: DataTableService) { }
 
   ngOnInit() {
     /*if (window.navigator.platform === 'Linux x86_64') {
@@ -39,6 +37,7 @@ export class CsvTableComponent implements OnInit, OnChanges {
     if (this.csvFile) {
       this.tableData = this.csvFile.split('\n');
       this.tableData.pop();
+      // this.data.setTable(this.tableData);
     } else {
       console.log('no change');
     }
@@ -46,24 +45,6 @@ export class CsvTableComponent implements OnInit, OnChanges {
   }
 
   setParamsForDataBase(article, btn) {
-    this.chosenArticle = article;
-    document.getElementById(btn).innerText = this.chosenArticle;
-    console.log(article);
-
-    /*if (this.article.length < counter) {
-      this.counter -= this.article.length;
-    } else {
-      this.counter++;
-    }
-    console.log(counter);*/
-  }
-
-  getButtonArticle(getId) {
-    const chosen = document.getElementById(getId.toString());
-    if (chosen == null) {
-      this.chosenArticle = this.articles[0];
-      return this.chosenArticle;
-    }
-    return this.chosenArticle;
+    document.getElementById(btn).innerText = article;
   }
 }

@@ -7,18 +7,18 @@
           <td class="dropdown" *ngFor="let it of tableData[0].split(';');let i = index;">
             <button [id]="'ddBtn' + i" class="dropbtn btn-secondary dropdown-toggle">{{articles[0]}}</button>
             <ul class="dropdown-content">
-              <li *ngFor="let it of articles"  (click)="setParamsForDataBase(it,'ddBtn' + i)">
-                <ng-container *ngIf="it != getButtonArticle('ddBtn' + i)">
+              <ng-container *ngFor="let it of articles" >
+                <li  *ngIf="it != (dV.getElementById('ddBtn' + i) != null ? dV.getElementById('ddBtn' + i).innerText:articles[0])"  (click)="setParamsForDataBase(it,'ddBtn' + i)">
                   {{it}}
-                </ng-container>
-              </li>
+                </li>
+              </ng-container>
             </ul>
           </td>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of tableData">
-          <td><input type="checkbox"></td>
+        <tr *ngFor="let item of tableData;let i = index;">
+          <td><input [id]="'row' + i" type="checkbox"></td>
           <td *ngFor="let it of item.split(';')">
             {{it}}
           </td>
