@@ -27,5 +27,6 @@ export class CsvReaderComponent implements OnInit {
       this.csvData = reader.result;
       this.tableWares.emit(this.csvData);
     };
+    (document.getElementById('fileDialog')as HTMLInputElement).value = '';
   }
 }
