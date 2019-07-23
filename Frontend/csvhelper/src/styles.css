@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+body, html {
+  height: 95%;
+}
+
+
+.body-styling {
+  width: 50px;
+  position: fixed;
+  height: 50px;
+  z-index: -5;
+  background: url("assets/Sport_2000_rgb.jpg") no-repeat center;
+  background-size: cover;
+  left: 0;
+  bottom: 0;
+}
+
