@@ -1,0 +1,14 @@
+<div>
+  <app-csv-reader (tableWares)="fillTableWare($event)"></app-csv-reader>
+  <app-csv-table [csvFile]="tableWare" (csvList)="fillTableData($event)"></app-csv-table>
+  <div class="body-style">
+    <div class="share" draggable="true">
+      <div class="toggle"></div>
+      <ul>
+        <li><a class="trash" href="#" (click)="deleteTable()"></a></li>
+        <li><a class="deleteRow" href="#" (click)="deleteSelectedRows()"></a></li>
+        <li><a class="checked" href="#" (click)="safeTable()"></a></li>
+      </ul>
+    </div>
+  </div>
+</div>

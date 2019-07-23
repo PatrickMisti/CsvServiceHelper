@@ -6,11 +6,8 @@
         <input id="fileDialog" type="file" hidden style="display: none" (change)="chosenFile($event)">
       </div>
       <div class="col-md-8 element-styling">
-        <input [(ngModel)]="resultPath" id="filePicker" class="input-styling" type="text" disabled>
+        <input [ngModel]="resultPath" id="filePicker" class="input-styling" disabled/>
       </div>
     </div>
-  </div>
-  <div class="table-point-style">
-    <app-csv-table [csvFile]="csvData"></app-csv-table>
   </div>
 </div>

@@ -1,6 +1,5 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
 import {ArticleEnum} from '../../article.enum';
-import {DataTableService} from '../../service/data-table.service';
 
 @Component({
   selector: 'app-csv-table',
@@ -8,13 +7,14 @@ import {DataTableService} from '../../service/data-table.service';
   styleUrls: ['./csv-table.component.css']
 })
 export class CsvTableComponent implements OnInit, OnChanges {
-  @Input() csvFile = '';
+  @Input() csvFile: string;
+  @Output() csvList = new EventEmitter();
   tableData = null;
   articles = [];
   dV = document;
   // splitter = '';
 
-  constructor(private data: DataTableService) { }
+  constructor() { }
 
   ngOnInit() {
     /*if (window.navigator.platform === 'Linux x86_64') {
@@ -22,26 +22,20 @@ export class CsvTableComponent implements OnInit, OnChanges {
     } else if (window.navigator.platform === 'Win x64') {
       this.splitter = ';';
     }*/
-    // tslint:disable-next-line:forin
-    /*for (const it in ArticleEnum) {
-      console.log(it);
-      this.article.push(it);
-    }*/
     this.articles = Object.keys(ArticleEnum).filter(k => typeof ArticleEnum[k as any] === 'number');
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-
+  ngOnChanges(changes: SimpleChanges) {
+    const file = changes.csvFile.currentValue;
     console.log('changes');
     this.tableData = '';
-    if (this.csvFile) {
-      this.tableData = this.csvFile.split('\n');
+    if (file) {
+      this.tableData = file.split('\n');
       this.tableData.pop();
-      // this.data.setTable(this.tableData);
     } else {
       console.log('no change');
     }
-    this.csvFile = '';
+    this.csvList.emit(this.tableData);
   }
 
   setParamsForDataBase(article, btn) {

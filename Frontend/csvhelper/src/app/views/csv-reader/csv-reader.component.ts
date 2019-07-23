@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-csv-reader',
@@ -9,6 +9,7 @@ export class CsvReaderComponent implements OnInit {
 
   resultPath = '';
   csvData: string | ArrayBuffer;
+  @Output() tableWares = new EventEmitter<string | ArrayBuffer>();
   constructor() { }
 
   ngOnInit() {
@@ -20,12 +21,11 @@ export class CsvReaderComponent implements OnInit {
 
   chosenFile(event) {
     this.resultPath = event.target.files[0].path;
-    this.csvData = null;
     const reader = new FileReader();
     reader.readAsText(event.target.files[0]);
     reader.onload = () => {
       this.csvData = reader.result;
-      console.log(this.csvData);
+      this.tableWares.emit(this.csvData);
     };
   }
 }

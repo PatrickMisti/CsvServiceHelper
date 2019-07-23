@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {CsvReaderComponent} from './views/csv-reader/csv-reader.component';
+import {CsvOverviewComponent} from './views/csv-overview/csv-overview.component';
 
 const routes: Routes = [
-  {path: '', component: CsvReaderComponent}
+  {path: '', component: CsvOverviewComponent}
 ];
 
 @NgModule({
