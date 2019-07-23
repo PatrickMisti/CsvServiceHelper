@@ -22,19 +22,20 @@ export class CsvTableComponent implements OnInit, OnChanges {
     } else if (window.navigator.platform === 'Win x64') {
       this.splitter = ';';
     }*/
+    // Enum zu einer Liste konvertieren
     this.articles = Object.keys(ArticleEnum).filter(k => typeof ArticleEnum[k as any] === 'number');
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // wenn ein File reinkommt zur Bearbitung
+    // @Input wird verwendet um überhaupt die Chance zu haben ngOnChange aufzurufen
     const file = changes.csvFile.currentValue;
-    console.log('changes');
     this.tableData = '';
     if (file) {
-      this.tableData = file.split('\n');
-      this.tableData.pop();
-    } else {
-      console.log('no change');
+      this.tableData = file.split('\n');                // Splittet in Rows
+      this.tableData.pop();                                     // löscht letzte Zeile wird unnötig automatisch generiert
     }
+    // gesplittete Daten werden an Overview gesendet
     this.csvList.emit(this.tableData);
   }
 

@@ -16,6 +16,7 @@ export class CsvReaderComponent implements OnInit {
   }
 
   fileDialogOpen() {
+    // Wenn Button geklickt wurde soll das input type file aufgerufen werden input ist hidden
     document.getElementById('fileDialog').click();
   }
 
@@ -24,9 +25,11 @@ export class CsvReaderComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsText(event.target.files[0]);
     reader.onload = () => {
+      // datenbeschafung von der Csv-File
       this.csvData = reader.result;
-      this.tableWares.emit(this.csvData);
+      this.tableWares.emit(this.csvData);       // Daten an Overview liefern
     };
+    // muss gemacht werden um files wieder aufzumachen sonst wird onChange nicht aufgerufen
     (document.getElementById('fileDialog')as HTMLInputElement).value = '';
   }
 }
