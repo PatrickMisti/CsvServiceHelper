@@ -21,6 +21,8 @@ export class CsvReaderComponent implements OnInit {
   }
 
   chosenFile(event) {
+    // um aus der CSV lesen zu könnnen
+    console.log('chosenfile');
     this.resultPath = event.target.files[0].path;
     const reader = new FileReader();
     reader.readAsText(event.target.files[0]);

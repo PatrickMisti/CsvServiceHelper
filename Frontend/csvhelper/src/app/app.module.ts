@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {CsvTableComponent} from './views/csv-table/csv-table.component';
 import { NgxPopper } from 'angular-popper';
 import { CsvOverviewComponent } from './views/csv-overview/csv-overview.component';
+import {NgxLoadingModule} from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CsvOverviewComponent } from './views/csv-overview/csv-overview.componen
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgxPopper
+    NgxPopper,
+    NgxLoadingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

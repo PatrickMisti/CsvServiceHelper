@@ -6,7 +6,7 @@
         <input id="fileDialog" type="file" hidden style="display: none" (change)="chosenFile($event)">
       </div>
       <div class="col-md-8 element-styling">
-        <input [ngModel]="resultPath" id="filePicker" class="input-styling" disabled/>
+        <input [(ngModel)]="resultPath" id="filePicker" class="input-styling" disabled/>
       </div>
     </div>
   </div>

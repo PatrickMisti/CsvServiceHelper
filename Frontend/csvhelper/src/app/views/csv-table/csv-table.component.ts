@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
-import {ArticleEnum} from '../../article.enum';
+import {ModelTextEnum} from '../../model-text.enum';
 
 @Component({
   selector: 'app-csv-table',
@@ -23,7 +23,7 @@ export class CsvTableComponent implements OnInit, OnChanges {
       this.splitter = ';';
     }*/
     // Enum zu einer Liste konvertieren
-    this.articles = Object.keys(ArticleEnum).filter(k => typeof ArticleEnum[k as any] === 'number');
+    this.articles = Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number');
   }
 
   ngOnChanges(changes: SimpleChanges) {
