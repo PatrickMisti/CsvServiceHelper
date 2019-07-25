@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-table-edit-popup',
@@ -10,10 +10,14 @@ export class TableEditPopupComponent implements OnInit {
 
   arrayList = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string) { }
+  constructor(public dialogRef: MatDialogRef<TableEditPopupComponent>, @Inject(MAT_DIALOG_DATA) public data: string) { }
 
   ngOnInit() {
     this.data.split(';').map(it => this.arrayList.push(it));
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
   }
 
 }

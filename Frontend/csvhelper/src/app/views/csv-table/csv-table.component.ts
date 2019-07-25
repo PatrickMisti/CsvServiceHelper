@@ -46,11 +46,14 @@ export class CsvTableComponent implements OnInit, OnChanges {
   }
 
 
-  testpopup(item) {
+  editPopUp(item) {
     const dialogRef = this.dialog.open(TableEditPopupComponent, {
-      width: '400px',
-      height: '600px',
+      width: '500px',
+      height: '800px',
       data: item
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
 }

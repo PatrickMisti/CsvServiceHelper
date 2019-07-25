@@ -1,4 +1,5 @@
 <div>
+  <h1 style="text-align: center;padding-bottom: 15px;">Bearbeitung</h1>
   <form class="form-style">
     <mat-form-field *ngFor="let item of arrayList" class="textarea-full-width">
       <label class="textarea-full-width">
@@ -6,4 +7,12 @@
       </label>
     </mat-form-field>
   </form>
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+      <button mat-fab (click)="onNoClick()"><img class="delete-img" src="" alt=""></button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-fab><img class="safe-img" src="" alt=""></button>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

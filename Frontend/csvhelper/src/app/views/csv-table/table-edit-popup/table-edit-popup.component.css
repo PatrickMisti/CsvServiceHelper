@@ -6,3 +6,20 @@
 .textarea-full-width {
   width: 100%;
 }
+button {
+  height: 70px;
+  width: 70px;
+}
+/*mat-grid-tile.mat-grid-tile {
+  padding: 0;
+  height: 40%;
+}*/
+.safe-img {
+  content: url("../../../../assets/check-mark.png");
+}
+.delete-img {
+  content: url("../../../../assets/005-close.png");
+}
+button.mat-fab{
+  background: darkred ;
+}

@@ -10,7 +10,15 @@ import { NgxPopper } from 'angular-popper';
 import { CsvOverviewComponent } from './views/csv-overview/csv-overview.component';
 import {NgxLoadingModule} from 'ngx-loading';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatInputModule
+} from '@angular/material';
 import { TableEditPopupComponent } from './views/csv-table/table-edit-popup/table-edit-popup.component';
 
 @NgModule({
@@ -35,7 +43,9 @@ import { TableEditPopupComponent } from './views/csv-table/table-edit-popup/tabl
     MatCheckboxModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDividerModule,
+    MatGridListModule
   ],
   providers: [
     /*{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}*/
