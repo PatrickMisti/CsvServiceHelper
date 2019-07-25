@@ -8,7 +8,8 @@ export class HttpService {
 
   constructor() { }
 
-  async sendArtikelData(data) {
+  static async sendModelTextData(data) {
+    console.log('Daten versendet');
     await fetch('');
   }
 }

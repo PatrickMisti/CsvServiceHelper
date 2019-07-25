@@ -19,7 +19,7 @@
       <tbody>
         <tr *ngFor="let item of tableData;let i = index;" [id]="'row' + i">
           <td><input [id]="'check'+i" type="checkbox"></td>
-          <td *ngFor="let it of item.split(';')">
+          <td (click)="testpopup(item)" *ngFor="let it of item.split(';')">
             {{it}}
           </td>
         </tr>

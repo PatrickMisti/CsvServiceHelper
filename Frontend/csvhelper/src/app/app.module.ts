@@ -9,22 +9,37 @@ import {CsvTableComponent} from './views/csv-table/csv-table.component';
 import { NgxPopper } from 'angular-popper';
 import { CsvOverviewComponent } from './views/csv-overview/csv-overview.component';
 import {NgxLoadingModule} from 'ngx-loading';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import { TableEditPopupComponent } from './views/csv-table/table-edit-popup/table-edit-popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CsvReaderComponent,
     CsvTableComponent,
-    CsvOverviewComponent
+    CsvOverviewComponent,
+    TableEditPopupComponent
+  ],
+  entryComponents: [
+    TableEditPopupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     NgxPopper,
-    NgxLoadingModule
+    NgxLoadingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
-  providers: [],
+  providers: [
+    /*{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}*/
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

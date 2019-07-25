@@ -3,6 +3,7 @@ import index from '@angular/cli/lib/cli';
 import {ModelText} from '../../entities/model-text';
 import {ModelTextEnum} from '../../model-text.enum';
 import {async} from '@angular/core/testing';
+import {HttpService} from '../../http.service';
 
 @Component({
   selector: 'app-csv-overview',
@@ -16,7 +17,7 @@ export class CsvOverviewComponent implements OnInit {
   tableData = [];
   loading = false;
 
-  constructor() {}
+  constructor(private client: HttpService) {}
 
   ngOnInit(): void {
     this.buttonInit();
@@ -99,9 +100,8 @@ export class CsvOverviewComponent implements OnInit {
   safeTable() {
     this.loading = true;
     const dropdownArray = this.rowChooseArrayBuilder();
-    // const model = new ModelText('At', '879546', 'Adidas', '987', 'hose', 'aölskdjfalksnd');
     const safeToDb = this.arrayModelBuilder(dropdownArray);
-    console.log(safeToDb);
+    this.sendToService(safeToDb).then();
     this.loading = false;
   }
 
@@ -109,7 +109,6 @@ export class CsvOverviewComponent implements OnInit {
     const btnSelector = [];
     for (let i = 0; i < this.tableData[1].split(';').length; i++) {
       const btn = document.getElementById('ddBtn' + i).textContent;
-      console.log(btn + ' = ' + ModelTextEnum[btn]);
       btnSelector.push(ModelTextEnum[btn]);
     }
     return btnSelector;
@@ -117,8 +116,9 @@ export class CsvOverviewComponent implements OnInit {
 
   arrayModelBuilder(dropdownOrder) {
     const resultList = [];
-    const result = [];
+    let result;
     for (const item of this.tableData) {
+      result = [];
       for (const order of ModelText.getOrder()) {
         for (const arrayList of dropdownOrder) {
           if (order === arrayList) {
@@ -130,5 +130,9 @@ export class CsvOverviewComponent implements OnInit {
       resultList.push(new ModelText(result[0], result[1], result[2], result[3], result[4], result[5]));
     }
     return resultList;
+  }
+
+  async sendToService(result) {
+    await HttpService.sendModelTextData(result);
   }
 }

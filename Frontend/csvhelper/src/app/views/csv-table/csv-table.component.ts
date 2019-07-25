@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ModelTextEnum} from '../../model-text.enum';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {TableEditPopupComponent} from './table-edit-popup/table-edit-popup.component';
 
 @Component({
   selector: 'app-csv-table',
@@ -14,7 +16,7 @@ export class CsvTableComponent implements OnInit, OnChanges {
   dV = document;
   // splitter = '';
 
-  constructor() { }
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
     /*if (window.navigator.platform === 'Linux x86_64') {
@@ -41,5 +43,14 @@ export class CsvTableComponent implements OnInit, OnChanges {
 
   setParamsForDataBase(article, btn) {
     document.getElementById(btn).innerText = article;
+  }
+
+
+  testpopup(item) {
+    const dialogRef = this.dialog.open(TableEditPopupComponent, {
+      width: '400px',
+      height: '600px',
+      data: item
+    });
   }
 }
