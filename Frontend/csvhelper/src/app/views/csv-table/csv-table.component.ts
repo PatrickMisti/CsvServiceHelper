@@ -14,6 +14,7 @@ export class CsvTableComponent implements OnInit, OnChanges {
   tableData = null;
   articles = [];
   dV = document;
+  lastEdit = '';
   // splitter = '';
 
   constructor(public dialog: MatDialog) {}
@@ -53,7 +54,14 @@ export class CsvTableComponent implements OnInit, OnChanges {
       data: item
     });
     dialogRef.afterClosed().subscribe(result => {
+      item = result;
+      this.lastEdit = result;
       console.log(result);
+      return result;
     });
+  }
+
+  testMethode() {
+    console.log('Hallo');
   }
 }
