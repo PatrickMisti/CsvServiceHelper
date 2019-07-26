@@ -4,6 +4,7 @@ import {ModelText} from '../../entities/model-text';
 import {ModelTextEnum} from '../../model-text.enum';
 import {async} from '@angular/core/testing';
 import {HttpService} from '../../http.service';
+import {Globals} from '../../globals';
 
 @Component({
   selector: 'app-csv-overview',
@@ -16,8 +17,11 @@ export class CsvOverviewComponent implements OnInit {
   tableWare: string | ArrayBuffer;
   tableData = [];
   loading = false;
+  split = '';
 
-  constructor(private client: HttpService) {}
+  constructor(private client: HttpService, private global: Globals) {
+    this.split = this.global.splitter;
+  }
 
   ngOnInit(): void {
     this.buttonInit();
@@ -107,7 +111,7 @@ export class CsvOverviewComponent implements OnInit {
 
   rowChooseArrayBuilder() {
     const btnSelector = [];
-    for (let i = 0; i < this.tableData[1].split(';').length; i++) {
+    for (let i = 0; i < this.tableData[1].split(this.split).length; i++) {
       const btn = document.getElementById('ddBtn' + i).textContent;
       btnSelector.push(ModelTextEnum[btn]);
     }
@@ -122,7 +126,7 @@ export class CsvOverviewComponent implements OnInit {
       for (const order of ModelText.getOrder()) {
         for (const arrayList of dropdownOrder) {
           if (order === arrayList) {
-            const itemSplit = item.split(';');
+            const itemSplit = item.split(this.split);
             result.push(itemSplit[dropdownOrder.indexOf(arrayList)]);
           }
         }

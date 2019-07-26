@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {ModelTextEnum} from '../../model-text.enum';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {TableEditPopupComponent} from './table-edit-popup/table-edit-popup.component';
+import {Globals} from '../../globals';
 
 @Component({
   selector: 'app-csv-table',
@@ -14,8 +15,11 @@ export class CsvTableComponent implements OnInit, OnChanges {
   tableData = null;
   articles = [];
   dV = document;
+  split = '';
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private global: Globals) {
+    this.split = this.global.splitter;
+  }
 
   ngOnInit() {
     // Enum zu einer Liste konvertieren
@@ -23,6 +27,8 @@ export class CsvTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.split = this.global.splitter;
+    console.log(this.split);
     // wenn ein File reinkommt zur Bearbitung
     // @Input wird verwendet um überhaupt die Chance zu haben ngOnChange aufzurufen
     const file = changes.csvFile.currentValue;
@@ -35,20 +41,18 @@ export class CsvTableComponent implements OnInit, OnChanges {
     this.csvList.emit(this.tableData);
   }
 
-  setParamsForDataBase(article, btn) {
-    document.getElementById(btn).innerText = article;
-  }
-
-
   editPopUp(item) {
+    // index speichern für das updaten des Datensatzes
     const index = this.tableData.indexOf(item);
+    // öffnen eines pop-up Fensters TableEditPopupComponent mit item
     const dialogRef = this.dialog.open(TableEditPopupComponent, {
       width: '500px',
       height: '800px',
       data: item
     });
+    // beim Schließen des Fensters daten zurückliefern
     dialogRef.afterClosed().subscribe(result => {
-      this.tableData[index] = result;
+      this.tableData[index] = result;                             // Update des Datensatzes am bestimmten index
     });
   }
 }

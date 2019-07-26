@@ -17,9 +17,10 @@ import {
   MatDividerModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatInputModule
+  MatInputModule, MatMenuModule
 } from '@angular/material';
 import { TableEditPopupComponent } from './views/csv-table/table-edit-popup/table-edit-popup.component';
+import {Globals} from './globals';
 
 @NgModule({
   declarations: [
@@ -45,9 +46,11 @@ import { TableEditPopupComponent } from './views/csv-table/table-edit-popup/tabl
     MatFormFieldModule,
     MatInputModule,
     MatDividerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatMenuModule
   ],
   providers: [
+    Globals
     /*{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}*/
   ],
   bootstrap: [AppComponent]

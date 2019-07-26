@@ -23,11 +23,19 @@
   font-size: 18px;
 }
 .btn-styling {
-  margin-top: 7px;
-  min-height: 80%;
-  min-width: 50%;
-  font-size: 18px;
-  font-weight: bold;
+  margin-top: 0.7em;
+  min-height: 70%;
+  min-width: 40%;
+  font-size: 16px;
+  font-weight: bolder;
+  border-radius: 30px;
+  background: darkred;
+  color: white;
+}
+.btn-split-styling {
+  margin-top: 1.5em;
+  font-size: 16px;
+  font-weight: bolder;
   border-radius: 30px;
   background: darkred;
   color: white;
