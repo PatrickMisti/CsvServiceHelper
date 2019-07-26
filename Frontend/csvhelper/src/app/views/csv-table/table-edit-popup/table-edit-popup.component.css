@@ -10,10 +10,6 @@ button {
   height: 70px;
   width: 70px;
 }
-/*mat-grid-tile.mat-grid-tile {
-  padding: 0;
-  height: 40%;
-}*/
 .safe-img {
   content: url("../../../../assets/check-mark.png");
 }

@@ -14,17 +14,10 @@ export class CsvTableComponent implements OnInit, OnChanges {
   tableData = null;
   articles = [];
   dV = document;
-  lastEdit = '';
-  // splitter = '';
 
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
-    /*if (window.navigator.platform === 'Linux x86_64') {
-      this.splitter = ';';
-    } else if (window.navigator.platform === 'Win x64') {
-      this.splitter = ';';
-    }*/
     // Enum zu einer Liste konvertieren
     this.articles = Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number');
   }
@@ -48,20 +41,14 @@ export class CsvTableComponent implements OnInit, OnChanges {
 
 
   editPopUp(item) {
+    const index = this.tableData.indexOf(item);
     const dialogRef = this.dialog.open(TableEditPopupComponent, {
       width: '500px',
       height: '800px',
       data: item
     });
     dialogRef.afterClosed().subscribe(result => {
-      item = result;
-      this.lastEdit = result;
-      console.log(result);
-      return result;
+      this.tableData[index] = result;
     });
-  }
-
-  testMethode() {
-    console.log('Hallo');
   }
 }
