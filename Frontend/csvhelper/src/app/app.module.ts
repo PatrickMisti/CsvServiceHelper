@@ -21,6 +21,7 @@ import {
 } from '@angular/material';
 import { TableEditPopupComponent } from './views/csv-table/table-edit-popup/table-edit-popup.component';
 import {Globals} from './globals';
+import { CsvOverviewBottomSheetComponent } from './views/csv-overview/csv-overview-bottom-sheet/csv-overview-bottom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {Globals} from './globals';
     CsvReaderComponent,
     CsvTableComponent,
     CsvOverviewComponent,
-    TableEditPopupComponent
+    TableEditPopupComponent,
+    CsvOverviewBottomSheetComponent
   ],
   entryComponents: [
     TableEditPopupComponent

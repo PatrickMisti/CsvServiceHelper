@@ -52,16 +52,21 @@
   transform: rotate(-45deg) scale(0.8);
 }
 .share ul.active li:nth-child(1) {
+  top: 80px;
+  left: -80px;
+  transition-delay: 0.25s;
+}
+.share ul.active li:nth-child(2) {
   top: 0;
   left: -80px;
   transition-delay: 0s;
 }
-.share ul.active li:nth-child(2) {
+.share ul.active li:nth-child(3) {
   top: -80px;
   left: -80px;
   transition-delay: 0.25s;
 }
-.share ul.active li:nth-child(3) {
+.share ul.active li:nth-child(4) {
   top: -80px;
   left: 0;
   transition-delay: 0s;
@@ -108,4 +113,6 @@
 .deleteRow {
   content: url("../../../assets/006-delete-row.png");
 }
-
+.setting {
+  content: url("../../../assets/settings.png");
+}

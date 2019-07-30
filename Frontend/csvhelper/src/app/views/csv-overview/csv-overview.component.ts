@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import index from '@angular/cli/lib/cli';
 import {ModelText} from '../../entities/model-text';
 import {ModelTextEnum} from '../../model-text.enum';
-import {async} from '@angular/core/testing';
 import {HttpService} from '../../http.service';
 import {Globals} from '../../globals';
 
@@ -102,11 +100,13 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   safeTable() {
-    this.loading = true;
     const dropdownArray = this.rowChooseArrayBuilder();
-    const safeToDb = this.arrayModelBuilder(dropdownArray);
-    this.sendToService(safeToDb).then();
-    this.loading = false;
+    if (this.rowChecker(dropdownArray)) {
+      const safeToDb = this.arrayModelBuilder(dropdownArray);
+      this.sendToService(safeToDb).then();
+    } else {
+
+    }
   }
 
   rowChooseArrayBuilder() {
@@ -118,21 +118,34 @@ export class CsvOverviewComponent implements OnInit {
     return btnSelector;
   }
 
-  arrayModelBuilder(dropdownOrder) {
-    const resultList = [];
-    let result;
-    for (const item of this.tableData) {
-      result = [];
-      for (const order of ModelText.getOrder()) {
-        for (const arrayList of dropdownOrder) {
-          if (order === arrayList) {
-            const itemSplit = item.split(this.split);
-            result.push(itemSplit[dropdownOrder.indexOf(arrayList)]);
-          }
-        }
+  rowChecker(btnSelector) {
+    const order = ModelText.getOrder();
+    let bool = true;
+    btnSelector.map(item => {
+      if (order.find(p => p === item) === undefined) {
+        bool = false;
       }
-      resultList.push(new ModelText(result[0], result[1], result[2], result[3], result[4], result[5]));
-    }
+    });
+    return bool;
+  }
+
+  arrayModelBuilder(dropdownOrder) {
+    // String zu Entity konvertieren
+    const resultList = [];
+    // genau einmal die Ganze liste
+    this.tableData.map(item => {
+      // Entity Reihenfolge
+      const order = ModelText.getOrder();
+      const colm = item.split(this.split);                      // Aufspaltung des Strings
+      resultList.push(new ModelText(                            // Befüllen der Liste
+        (dropdownOrder.find(p => p === order[0]) ? colm[dropdownOrder.indexOf(order[0])] : 'AT'),   // schaut ob element überhaupt
+        (dropdownOrder.find(p => p === order[1]) ? colm[dropdownOrder.indexOf(order[1])] : ''),     // vorhanden um Exeption zu umgehen
+        (dropdownOrder.find(p => p === order[2]) ? colm[dropdownOrder.indexOf(order[2])] : ''),     // dann die Suche nach dem Element
+        (dropdownOrder.find(p => p === order[3]) ? colm[dropdownOrder.indexOf(order[3])] : ''),     // im string falls element
+        (dropdownOrder.find(p => p === order[4]) ? colm[dropdownOrder.indexOf(order[4])] : ''),     //  nicht vorhanden default value
+        (dropdownOrder.find(p => p === order[5]) ? colm[dropdownOrder.indexOf(order[5])] : ''),
+      ));
+    });
     return resultList;
   }
 
