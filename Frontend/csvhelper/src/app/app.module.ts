@@ -4,20 +4,21 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CsvReaderComponent } from './views/csv-reader/csv-reader.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CsvTableComponent} from './views/csv-table/csv-table.component';
 import { NgxPopper } from 'angular-popper';
 import { CsvOverviewComponent } from './views/csv-overview/csv-overview.component';
 import {NgxLoadingModule} from 'ngx-loading';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MatBottomSheetModule,
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatInputModule, MatMenuModule
+  MatInputModule, MatListModule, MatMenuModule, MatStepperModule
 } from '@angular/material';
 import { TableEditPopupComponent } from './views/csv-table/table-edit-popup/table-edit-popup.component';
 import {Globals} from './globals';
@@ -33,7 +34,8 @@ import { CsvOverviewBottomSheetComponent } from './views/csv-overview/csv-overvi
     CsvOverviewBottomSheetComponent
   ],
   entryComponents: [
-    TableEditPopupComponent
+    TableEditPopupComponent,
+    CsvOverviewBottomSheetComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,11 @@ import { CsvOverviewBottomSheetComponent } from './views/csv-overview/csv-overvi
     MatInputModule,
     MatDividerModule,
     MatGridListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatStepperModule,
+    ReactiveFormsModule
   ],
   providers: [
     Globals

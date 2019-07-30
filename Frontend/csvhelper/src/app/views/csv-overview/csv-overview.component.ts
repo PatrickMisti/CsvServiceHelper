@@ -3,6 +3,8 @@ import {ModelText} from '../../entities/model-text';
 import {ModelTextEnum} from '../../model-text.enum';
 import {HttpService} from '../../http.service';
 import {Globals} from '../../globals';
+import {CsvOverviewBottomSheetComponent} from './csv-overview-bottom-sheet/csv-overview-bottom-sheet.component';
+import {MatBottomSheet} from '@angular/material';
 
 @Component({
   selector: 'app-csv-overview',
@@ -17,12 +19,20 @@ export class CsvOverviewComponent implements OnInit {
   loading = false;
   split = '';
 
-  constructor(private client: HttpService, private global: Globals) {
+  constructor(private client: HttpService, private global: Globals, private bottomSheet: MatBottomSheet) {
     this.split = this.global.splitter;
   }
 
   ngOnInit(): void {
     this.buttonInit();
+  }
+
+  settingForDropdown() {
+    const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent);
+    bottomSheetRef.afterDismissed().subscribe(result => {
+      console.log('Sheet close');
+      console.log(result);
+    });
   }
 
   buttonInit() {
@@ -105,7 +115,11 @@ export class CsvOverviewComponent implements OnInit {
       const safeToDb = this.arrayModelBuilder(dropdownArray);
       this.sendToService(safeToDb).then();
     } else {
-
+      const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent);
+      bottomSheetRef.afterDismissed().subscribe(result => {
+        console.log('Sheet close');
+        console.log(result);
+      });
     }
   }
 
