@@ -44,3 +44,6 @@ td {
   font-size: 18px;
   font-weight: bold;
 }
+.mat-menu-content {
+  width: 5px;
+}

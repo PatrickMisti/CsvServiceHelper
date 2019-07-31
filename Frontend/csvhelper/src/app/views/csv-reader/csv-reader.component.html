@@ -9,10 +9,10 @@
         <input [(ngModel)]="resultPath" id="filePicker" class="input-styling" disabled/>
       </div>
       <div class="col-auto">
-        <button class="btn btn-split-styling" [matMenuTriggerFor]="menu">as</button>
+        <button class="btn btn-split-styling" [matMenuTriggerFor]="menu">{{this.global.splitter}}</button>
         <mat-menu #menu>
-          <button mat-menu-item (click)="switchSplitter(';')">;</button>
-          <button mat-menu-item (click)="switchSplitter(',')">,</button>
+          <button *ngIf="this.global.splitter != ';'" mat-menu-item (click)="switchSplitter(';')">;</button>
+          <button *ngIf="this.global.splitter != ','" mat-menu-item (click)="switchSplitter(',')">,</button>
           <input mat-menu-item matInput placeholder="Trennzeichen" (click)="$event.stopPropagation()" [(ngModel)]="this.global.splitter">
         </mat-menu>
       </div>

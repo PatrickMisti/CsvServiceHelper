@@ -27,14 +27,6 @@ export class CsvOverviewComponent implements OnInit {
     this.buttonInit();
   }
 
-  settingForDropdown() {
-    const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent);
-    bottomSheetRef.afterDismissed().subscribe(result => {
-      console.log('Sheet close');
-      console.log(result);
-    });
-  }
-
   buttonInit() {
     // rechter unterer Button wird initialisiert um sich zu bewegen
     const toggle = document.querySelector('.toggle');
@@ -109,13 +101,25 @@ export class CsvOverviewComponent implements OnInit {
     this.tableData = event;
   }
 
+  settingForDropdown() {
+    const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
+      data: {linear: false}
+    });
+    bottomSheetRef.afterDismissed().subscribe(result => {
+      console.log('Sheet close');
+      console.log(result);
+    });
+  }
+
   safeTable() {
     const dropdownArray = this.rowChooseArrayBuilder();
     if (this.rowChecker(dropdownArray)) {
       const safeToDb = this.arrayModelBuilder(dropdownArray);
       this.sendToService(safeToDb).then();
     } else {
-      const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent);
+      const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent,{
+        data: {linear: true}
+      });
       bottomSheetRef.afterDismissed().subscribe(result => {
         console.log('Sheet close');
         console.log(result);

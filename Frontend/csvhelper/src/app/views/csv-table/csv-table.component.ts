@@ -52,7 +52,9 @@ export class CsvTableComponent implements OnInit, OnChanges {
     });
     // beim Schließen des Fensters daten zurückliefern
     dialogRef.afterClosed().subscribe(result => {
-      this.tableData[index] = result;                             // Update des Datensatzes am bestimmten index
+      if (result !== undefined) {                                   // muss überprüfen wegen raus klick
+        this.tableData[index] = result;                             // Update des Datensatzes am bestimmten index
+      }
     });
   }
 }
