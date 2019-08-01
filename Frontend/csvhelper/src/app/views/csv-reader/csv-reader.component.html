@@ -13,7 +13,7 @@
         <mat-menu #menu>
           <button *ngIf="this.global.splitter != ';'" mat-menu-item (click)="switchSplitter(';')">;</button>
           <button *ngIf="this.global.splitter != ','" mat-menu-item (click)="switchSplitter(',')">,</button>
-          <input mat-menu-item matInput placeholder="Trennzeichen" (click)="$event.stopPropagation()" [(ngModel)]="this.global.splitter">
+          <input class="item-styling" mat-menu-item matInput placeholder="۞" (click)="$event.stopPropagation()" [(ngModel)]="this.global.splitter">
         </mat-menu>
       </div>
     </div>
