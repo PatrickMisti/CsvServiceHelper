@@ -106,24 +106,25 @@ export class CsvOverviewComponent implements OnInit {
       data: {linear: false}
     });
     bottomSheetRef.afterDismissed().subscribe(result => {
-      console.log('Sheet close');
       console.log(result);
     });
   }
 
   safeTable() {
-    const dropdownArray = this.rowChooseArrayBuilder();
-    if (this.rowChecker(dropdownArray)) {
-      const safeToDb = this.arrayModelBuilder(dropdownArray);
-      this.sendToService(safeToDb).then();
-    } else {
-      const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent,{
-        data: {linear: true}
-      });
-      bottomSheetRef.afterDismissed().subscribe(result => {
-        console.log('Sheet close');
-        console.log(result);
-      });
+    if (this.tableData === null) {
+      const dropdownArray = this.rowChooseArrayBuilder();
+      if (this.rowChecker(dropdownArray)) {
+        const safeToDb = this.arrayModelBuilder(dropdownArray);
+        this.sendToService(safeToDb).then();
+      } else {
+        const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
+          data: {linear: true},
+          disableClose: true
+        });
+        bottomSheetRef.afterDismissed().subscribe(result => {
+          console.log(result);
+        });
+      }
     }
   }
 

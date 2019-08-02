@@ -28,7 +28,6 @@ export class CsvTableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.split = this.global.splitter;
-    console.log(this.split);
     // wenn ein File reinkommt zur Bearbitung
     // @Input wird verwendet um überhaupt die Chance zu haben ngOnChange aufzurufen
     const file = changes.csvFile.currentValue;
