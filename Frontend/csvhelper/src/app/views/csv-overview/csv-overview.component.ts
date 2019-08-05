@@ -17,10 +17,12 @@ export class CsvOverviewComponent implements OnInit {
   tableWare: string | ArrayBuffer;
   tableData = [];
   loading = false;
-  split = '';
+  split: string;
+  modelText: ModelText;
 
   constructor(private client: HttpService, private global: Globals, private bottomSheet: MatBottomSheet) {
     this.split = this.global.splitter;
+    this.modelText = this.global.modelText;
   }
 
   ngOnInit(): void {
@@ -99,6 +101,7 @@ export class CsvOverviewComponent implements OnInit {
   fillTableData(event) {
     // holt aufgesplittet die Daten von csv-table.component
     this.tableData = event;
+    this.split = this.global.splitter;
   }
 
   settingForDropdown() {
@@ -110,19 +113,19 @@ export class CsvOverviewComponent implements OnInit {
 
   safeTable() {
     console.log('hallo');
-    if (this.tableData.length !== 0) {
+    try {
       const dropdownArray = this.rowChooseArrayBuilder();
-      if (this.rowChecker(dropdownArray)) {
-        const safeToDb = this.arrayModelBuilder(dropdownArray);
-        this.sendToService(safeToDb).then();
-      } else {
+      if (this.tableData.length !== 0 && this.rowChecker(dropdownArray)) {
+
         const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
           data: {linear: true},
           disableClose: true
         });
-        bottomSheetRef.afterDismissed().subscribe();
+        bottomSheetRef.afterDismissed().subscribe(() => this.arrayModelBuilder(dropdownArray).then(res => this.sendToService(res)));
+      } else {
+        alert('Bitte Dropdowns richtig füllen mit Modelnumber und Beschreibung!!!');
       }
-    } else {
+    } catch (e) {
       alert('Keine Daten vorhanden!!!');
     }
   }
@@ -140,14 +143,17 @@ export class CsvOverviewComponent implements OnInit {
     const order = ModelText.getOrder();
     let bool = true;
     btnSelector.map(item => {
-      if (order.find(p => p === item) === undefined) {
+      if (order.find(p => p === item) === undefined && bool) {
         bool = false;
       }
     });
+    if (btnSelector.find(p => p === ModelTextEnum.ModelNumber) && btnSelector.find(p => p === ModelTextEnum.Description)) {
+      bool = true;
+    }
     return bool;
   }
 
-  arrayModelBuilder(dropdownOrder) {
+  async arrayModelBuilder(dropdownOrder) {
     // String zu Entity konvertieren
     const resultList = [];
     // genau einmal die Ganze liste
@@ -156,18 +162,21 @@ export class CsvOverviewComponent implements OnInit {
       const order = ModelText.getOrder();
       const colm = item.split(this.split);                      // Aufspaltung des Strings
       resultList.push(new ModelText(                            // Befüllen der Liste
-        (dropdownOrder.find(p => p === order[0]) ? colm[dropdownOrder.indexOf(order[0])] : 'AT'),   // schaut ob element überhaupt
-        (dropdownOrder.find(p => p === order[1]) ? colm[dropdownOrder.indexOf(order[1])] : ''),     // vorhanden um Exeption zu umgehen
-        (dropdownOrder.find(p => p === order[2]) ? colm[dropdownOrder.indexOf(order[2])] : ''),     // dann die Suche nach dem Element
-        (dropdownOrder.find(p => p === order[3]) ? colm[dropdownOrder.indexOf(order[3])] : ''),     // im string falls element
-        (dropdownOrder.find(p => p === order[4]) ? colm[dropdownOrder.indexOf(order[4])] : ''),     //  nicht vorhanden default value
-        (dropdownOrder.find(p => p === order[5]) ? colm[dropdownOrder.indexOf(order[5])] : ''),
+        // schaut ob element überhaupt vorhanden um Exeption zu umgehen dann
+        // die Suche nach dem Element im string falls element nicht vorhanden default value
+        (dropdownOrder.find(p => p === order[0]) ? colm[dropdownOrder.indexOf(order[0])] : this.modelText.DltCountryCode),
+        (dropdownOrder.find(p => p === order[1]) ? colm[dropdownOrder.indexOf(order[1])] : this.modelText.SupplierId),
+        (dropdownOrder.find(p => p === order[2]) ? colm[dropdownOrder.indexOf(order[2])] : this.modelText.Brand),
+        (dropdownOrder.find(p => p === order[3]) ? colm[dropdownOrder.indexOf(order[3])] : this.modelText.ModelNumber),
+        (dropdownOrder.find(p => p === order[4]) ? colm[dropdownOrder.indexOf(order[4])] : this.modelText.Description),
+        (dropdownOrder.find(p => p === order[5]) ? colm[dropdownOrder.indexOf(order[5])] : this.modelText.Text),
       ));
     });
     return resultList;
   }
 
   async sendToService(result) {
+    console.log(result);
     await HttpService.sendModelTextData(result);
   }
 }
