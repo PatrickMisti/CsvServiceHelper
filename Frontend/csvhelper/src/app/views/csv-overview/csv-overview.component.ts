@@ -105,9 +105,7 @@ export class CsvOverviewComponent implements OnInit {
     const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
       data: {linear: false}
     });
-    bottomSheetRef.afterDismissed().subscribe(result => {
-      console.log(result);
-    });
+    bottomSheetRef.afterDismissed().subscribe();
   }
 
   safeTable() {
@@ -122,9 +120,7 @@ export class CsvOverviewComponent implements OnInit {
           data: {linear: true},
           disableClose: true
         });
-        bottomSheetRef.afterDismissed().subscribe(result => {
-          console.log(result);
-        });
+        bottomSheetRef.afterDismissed().subscribe();
       }
     } else {
       alert('Keine Daten vorhanden!!!');

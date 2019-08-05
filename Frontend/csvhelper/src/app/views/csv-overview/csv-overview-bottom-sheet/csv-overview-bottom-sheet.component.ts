@@ -38,7 +38,7 @@ export class CsvOverviewBottomSheetComponent implements OnInit {
 
   safeGlobalModelText() {
     this.fillGlobalModelText();
-    this.bottomSheetRef.dismiss('hallo');
+    this.bottomSheetRef.dismiss();
   }
 
   fillGlobalModelText() {
@@ -47,14 +47,5 @@ export class CsvOverviewBottomSheetComponent implements OnInit {
     modelText.DltCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
     modelText.SupplierId = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
     modelText.Brand = (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value;
-    // this.global.modelText = modelText;
   }
-
-  /*ngDoCheck(): void {
-    this.list.map(it => {
-      if (this.placeholderList.find(p => p === '')) {
-        document.getElementById(it).removeAttribute('formControlName');
-      }
-    } );
-  }*/
 }
