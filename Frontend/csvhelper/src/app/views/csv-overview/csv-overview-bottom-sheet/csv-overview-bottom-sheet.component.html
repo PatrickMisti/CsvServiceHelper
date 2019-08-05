@@ -4,9 +4,10 @@
       <form [formGroup]="myArray.controls[i]">
         <ng-template matStepLabel>{{item}}</ng-template>
         <mat-form-field>
-          <input [id]="'inputField'+i" matInput
+          <input [id]="item" matInput
                  placeholder="{{(placeholderList[i] != '') ? placeholderList[i] : 'Eingabe'}}"
                  formControlName="validators"
+                 value="{{(placeholderList[i] != '') ? placeholderList[i] : ''}}"
                  required>
         </mat-form-field>
         <div>
@@ -17,3 +18,4 @@
   </mat-vertical-stepper>
   <button class="btn-style" (click)="safeGlobalModelText()" mat-raised-button>Speichern</button>
 </form>
+<!--[attr.formControlName]="myArray.controls[i].value.validators == '' ? 'validators' : null"-->

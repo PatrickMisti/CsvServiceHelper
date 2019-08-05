@@ -20,14 +20,41 @@ export class CsvOverviewBottomSheetComponent implements OnInit {
               private formBuilder: FormBuilder, private global: Globals) {}
 
   ngOnInit() {
-    this.list = Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number');
-    this.list.shift();
+    this.list = (Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number')).splice(1);
+    this.list.splice(this.list.length / 2, this.list.length);
     this.placeholderList = Object.values(this.global.modelText);
+    this.placeholderList.splice(this.placeholderList.length / 2, this.placeholderList.length);
     this.linear = this.data.linear;
-    this.myArray = new FormArray(this.placeholderList.map(() => this.formBuilder.group({validators: ['', Validators.required]})));
+    let counter = -1;
+    this.myArray = new FormArray(this.placeholderList.map(() => {
+        counter++;
+        if (this.placeholderList[counter] === '') {
+          return this.formBuilder.group({validators: ['', Validators.required]});
+        } else {
+          return this.formBuilder.group({validators: ['.', !Validators.required]});
+        }
+      }));
   }
 
   safeGlobalModelText() {
+    this.fillGlobalModelText();
     this.bottomSheetRef.dismiss('hallo');
   }
+
+  fillGlobalModelText() {
+    const modelText = this.global.modelText;
+    const orderList = ModelText.getOrder();
+    modelText.DltCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
+    modelText.SupplierId = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
+    modelText.Brand = (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value;
+    // this.global.modelText = modelText;
+  }
+
+  /*ngDoCheck(): void {
+    this.list.map(it => {
+      if (this.placeholderList.find(p => p === '')) {
+        document.getElementById(it).removeAttribute('formControlName');
+      }
+    } );
+  }*/
 }

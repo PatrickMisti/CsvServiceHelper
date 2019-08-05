@@ -111,7 +111,8 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   safeTable() {
-    if (this.tableData === null) {
+    console.log('hallo');
+    if (this.tableData.length !== 0) {
       const dropdownArray = this.rowChooseArrayBuilder();
       if (this.rowChecker(dropdownArray)) {
         const safeToDb = this.arrayModelBuilder(dropdownArray);
@@ -125,6 +126,8 @@ export class CsvOverviewComponent implements OnInit {
           console.log(result);
         });
       }
+    } else {
+      alert('Keine Daten vorhanden!!!');
     }
   }
 
