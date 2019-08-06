@@ -1,20 +1,26 @@
-<form>
-  <mat-vertical-stepper [linear]="linear">
-    <mat-step *ngFor="let item of list;let i=index;" [stepControl]="myArray.controls[i]">
-      <form [formGroup]="myArray.controls[i]">
-        <ng-template matStepLabel>{{item}}</ng-template>
-        <mat-form-field>
-          <input [id]="item" matInput
-                 placeholder="{{(placeholderList[i] != '') ? placeholderList[i] : 'Eingabe'}}"
-                 formControlName="validators"
-                 value="{{(placeholderList[i] != '') ? placeholderList[i] : ''}}"
-                 required type="text">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext *ngIf="i < list.length - 1">Next</button>
-        </div>
-      </form>
-    </mat-step>
-  </mat-vertical-stepper>
-  <button id="submitBtn" class="btn-style" (click)="safeGlobalModelText()" mat-raised-button>Speichern</button>
+<form id="container" style="overflow: hidden;">
+  <form id="spinner-form" class="spinner-style-toggle">
+    <mat-spinner></mat-spinner>
+  </form>
+
+  <form id="input-form">
+    <mat-vertical-stepper [linear]="linear">
+      <mat-step *ngFor="let item of list;let i=index;" [stepControl]="myArray.controls[i]">
+        <form [formGroup]="myArray.controls[i]">
+          <ng-template matStepLabel>{{item}}</ng-template>
+          <mat-form-field>
+            <input [id]="item" matInput
+                   placeholder="{{(placeholderList[i] != '') ? placeholderList[i] : 'Eingabe'}}"
+                   formControlName="validators"
+                   value="{{(placeholderList[i] != '') ? placeholderList[i] : ''}}"
+                   required type="text">
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext *ngIf="i < list.length - 1">Next</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-vertical-stepper>
+    <button id="submitBtn" class="btn-style" (click)="safeGlobalModelText()" mat-raised-button>Speichern</button>
+  </form>
 </form>

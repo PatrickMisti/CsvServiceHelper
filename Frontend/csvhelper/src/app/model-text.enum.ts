@@ -4,6 +4,6 @@ export enum ModelTextEnum {
   SupplyId,
   Brand,
   ModelNumber,
-  Description,
-  Text
+  Text,
+  Description
 }

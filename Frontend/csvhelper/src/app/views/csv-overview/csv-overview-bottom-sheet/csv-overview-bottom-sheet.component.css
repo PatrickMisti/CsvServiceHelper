@@ -4,3 +4,19 @@
   background-color: darkred;
   margin: 25px;
 }
+.spinner-style-toggle {
+  /*visibility:hidden;*/
+  /*position: absolute;*/
+  display: none;
+}
+::ng-deep mat-spinner  {
+  width: 200px !important;
+  height: 200px !important;
+}
+::ng-deep svg  {
+  width: 200px !important;
+  height: 200px !important;
+}
+form {
+  /*visibility: hidden;*/
+}

@@ -62,19 +62,28 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
     if (this.linear === true) {
       const inputs = document.querySelectorAll('[type="text"]');                                // hollt sich alle input felder
       const knapp = document.querySelector('#submitBtn') as HTMLButtonElement;                  // hollt sich submit Button
-      knapp.disabled = true;
+      knapp.disabled = false;
 
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('input', () => {
           const valu = [];
-          inputs.forEach(v => valu.push((v as HTMLInputElement).value));    // hollt sich alle Ergebnisse von denn Inputs
+          inputs.forEach(v => {
+            valu.push((v as HTMLInputElement).value);
+
+          });    // hollt sich alle Ergebnisse von denn Inputs
           knapp.disabled = valu.includes('');                                         // disabled Speicher Btn nur wenn nicht im Input steht
         });
       }
     }
     if (this.data.btnDisable === 1) {
-      this.bottomSheetRef.dismiss();                                                // falls alles schon gesetzt ist bottomSheet close
+      document.getElementById('spinner-form').classList.remove('spinner-style-toggle');
+      document.getElementById('input-form').classList.add('spinner-style-toggle');
+      sleep(3000).then(() => this.bottomSheetRef.dismiss());       // falls alles schon gesetzt ist bottomSheet close
     }
   }
+}
+
+async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

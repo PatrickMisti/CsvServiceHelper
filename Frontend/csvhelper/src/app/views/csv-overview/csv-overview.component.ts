@@ -122,7 +122,7 @@ export class CsvOverviewComponent implements OnInit {
         // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
         bottomSheetRef.afterDismissed().subscribe(() => this.arrayModelBuilder(dropdownArray).then(res => this.sendToService(res)));
       } else {
-        alert('Bitte Dropdowns richtig füllen mit Modelnumber und Beschreibung!!!');
+        alert('Bitte Dropdowns richtig füllen mit Modelnumber und Text!!!');
       }
     } catch (e) {
       alert('Keine Daten vorhanden!!!');
@@ -147,7 +147,7 @@ export class CsvOverviewComponent implements OnInit {
       }
     });
     // wenn bool = -1 ist gibt es noch die Chance das die Wichtigen Sachen vorhanden sind
-    if (btnSelector.find(p => p === ModelTextEnum.ModelNumber) && btnSelector.find(p => p === ModelTextEnum.Description) && bool !== 1) {
+    if (btnSelector.find(p => p === ModelTextEnum.ModelNumber) && btnSelector.find(p => p === ModelTextEnum.Text) && bool !== 1) {
       bool = 2;                         // wichtig für bottomSheet
     }
     return bool;
