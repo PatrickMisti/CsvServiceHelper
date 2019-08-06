@@ -60,9 +60,6 @@ export class CsvOverviewComponent implements OnInit {
     } else {
       alert('Es wurde noch kein File eingelesen');
     }
-    /*(async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    })();*/
     this.loading = false;
   }
 
@@ -105,6 +102,7 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   settingForDropdown() {
+    // Aufruf des bottomSheet
     const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
       data: {linear: false}
     });
@@ -112,15 +110,16 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   safeTable() {
-    console.log('hallo');
+    let results;                  // wir gebraucht für den rowChecker
     try {
-      const dropdownArray = this.rowChooseArrayBuilder();
-      if (this.tableData.length !== 0 && this.rowChecker(dropdownArray)) {
-
+      const dropdownArray = this.rowChooseArrayBuilder();                       // holt sich alles
+      results = this.rowChecker(dropdownArray);
+      if (this.tableData.length !== 0 && results > 0) {
         const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
-          data: {linear: true},
-          disableClose: true
+          data: {linear: true, btnDisable: results},
+          disableClose: true                            // Benuter soll denn bottomSheet nicht zu machen
         });
+        // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
         bottomSheetRef.afterDismissed().subscribe(() => this.arrayModelBuilder(dropdownArray).then(res => this.sendToService(res)));
       } else {
         alert('Bitte Dropdowns richtig füllen mit Modelnumber und Beschreibung!!!');
@@ -133,22 +132,23 @@ export class CsvOverviewComponent implements OnInit {
   rowChooseArrayBuilder() {
     const btnSelector = [];
     for (let i = 0; i < this.tableData[1].split(this.split).length; i++) {
-      const btn = document.getElementById('ddBtn' + i).textContent;
-      btnSelector.push(ModelTextEnum[btn]);
+      const btn = document.getElementById('ddBtn' + i).textContent;             // holt sich alle Elemente von der dd Menu
+      btnSelector.push(ModelTextEnum[btn]);                                              // Speicher alles
     }
     return btnSelector;
   }
 
   rowChecker(btnSelector) {
-    const order = ModelText.getOrder();
-    let bool = true;
+    const order = ModelText.getOrder();         // hold sich die Reihenfolge vom Object
+    let bool = 1;                               // wichtig für bottomSheet
     btnSelector.map(item => {
-      if (order.find(p => p === item) === undefined && bool) {
-        bool = false;
+      if (order.find(p => p === item) === undefined && bool) {        // untersucht ob von der dd Auswahl das Element vorhanden ist
+        bool = -1;                                                             // -1 eines oder mehrere Elemente nicht gefunden
       }
     });
-    if (btnSelector.find(p => p === ModelTextEnum.ModelNumber) && btnSelector.find(p => p === ModelTextEnum.Description)) {
-      bool = true;
+    // wenn bool = -1 ist gibt es noch die Chance das die Wichtigen Sachen vorhanden sind
+    if (btnSelector.find(p => p === ModelTextEnum.ModelNumber) && btnSelector.find(p => p === ModelTextEnum.Description) && bool !== 1) {
+      bool = 2;                         // wichtig für bottomSheet
     }
     return bool;
   }

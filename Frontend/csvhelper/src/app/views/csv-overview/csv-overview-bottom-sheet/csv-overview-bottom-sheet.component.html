@@ -8,7 +8,7 @@
                  placeholder="{{(placeholderList[i] != '') ? placeholderList[i] : 'Eingabe'}}"
                  formControlName="validators"
                  value="{{(placeholderList[i] != '') ? placeholderList[i] : ''}}"
-                 required>
+                 required type="text">
         </mat-form-field>
         <div>
           <button mat-button matStepperNext *ngIf="i < list.length - 1">Next</button>
@@ -16,5 +16,5 @@
       </form>
     </mat-step>
   </mat-vertical-stepper>
-  <button class="btn-style" (click)="safeGlobalModelText()" mat-raised-button>Speichern</button>
+  <button id="submitBtn" class="btn-style" (click)="safeGlobalModelText()" mat-raised-button>Speichern</button>
 </form>
