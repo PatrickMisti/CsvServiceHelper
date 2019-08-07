@@ -1,5 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
-import {ArticleEnum} from '../../article.enum';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {ModelTextEnum} from '../../model-text.enum';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {TableEditPopupComponent} from './table-edit-popup/table-edit-popup.component';
+import {Globals} from '../../globals';
 
 @Component({
   selector: 'app-csv-table',
@@ -12,21 +15,19 @@ export class CsvTableComponent implements OnInit, OnChanges {
   tableData = null;
   articles = [];
   dV = document;
-  // splitter = '';
+  split = '';
 
-  constructor() { }
+  constructor(public dialog: MatDialog, private global: Globals) {
+    this.split = this.global.splitter;
+  }
 
   ngOnInit() {
-    /*if (window.navigator.platform === 'Linux x86_64') {
-      this.splitter = ';';
-    } else if (window.navigator.platform === 'Win x64') {
-      this.splitter = ';';
-    }*/
     // Enum zu einer Liste konvertieren
-    this.articles = Object.keys(ArticleEnum).filter(k => typeof ArticleEnum[k as any] === 'number');
+    this.articles = Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number');
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.split = this.global.splitter;
     // wenn ein File reinkommt zur Bearbitung
     // @Input wird verwendet um überhaupt die Chance zu haben ngOnChange aufzurufen
     const file = changes.csvFile.currentValue;
@@ -39,7 +40,20 @@ export class CsvTableComponent implements OnInit, OnChanges {
     this.csvList.emit(this.tableData);
   }
 
-  setParamsForDataBase(article, btn) {
-    document.getElementById(btn).innerText = article;
+  editPopUp(item) {
+    // index speichern für das updaten des Datensatzes
+    const index = this.tableData.indexOf(item);
+    // öffnen eines pop-up Fensters TableEditPopupComponent mit item
+    const dialogRef = this.dialog.open(TableEditPopupComponent, {
+      width: '500px',
+      height: '800px',
+      data: item
+    });
+    // beim Schließen des Fensters daten zurückliefern
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {                                   // muss überprüfen wegen raus klick
+        this.tableData[index] = result;                             // Update des Datensatzes am bestimmten index
+      }
+    });
   }
 }

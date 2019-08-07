@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Globals} from '../../globals';
 
 @Component({
   selector: 'app-csv-reader',
@@ -10,7 +11,8 @@ export class CsvReaderComponent implements OnInit {
   resultPath = '';
   csvData: string | ArrayBuffer;
   @Output() tableWares = new EventEmitter<string | ArrayBuffer>();
-  constructor() { }
+
+  constructor(private global: Globals) { }
 
   ngOnInit() {
   }
@@ -20,7 +22,12 @@ export class CsvReaderComponent implements OnInit {
     document.getElementById('fileDialog').click();
   }
 
+  switchSplitter(split) {
+    this.global.splitter = split;
+  }
+
   chosenFile(event) {
+    // um aus der CSV lesen zu könnnen
     this.resultPath = event.target.files[0].path;
     const reader = new FileReader();
     reader.readAsText(event.target.files[0]);

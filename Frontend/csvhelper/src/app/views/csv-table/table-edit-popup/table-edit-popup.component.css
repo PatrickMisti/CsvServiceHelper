@@ -1,0 +1,21 @@
+.form-style {
+  min-height: 150px;
+  min-width: 150px;
+  width: 100%;
+}
+.textarea-full-width {
+  width: 100%;
+}
+button {
+  height: 70px;
+  width: 70px;
+}
+.safe-img {
+  content: url("../../../../assets/check-mark.png");
+}
+.delete-img {
+  content: url("../../../../assets/005-close.png");
+}
+button.mat-fab{
+  background: darkred ;
+}

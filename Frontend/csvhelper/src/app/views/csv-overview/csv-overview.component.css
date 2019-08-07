@@ -4,8 +4,6 @@
 }
 .share {
   position: fixed;
-  /*top: 50%;
-  left: 50%;*/
   transform: rotate(45deg);
   width: 60px;
   height: 60px;
@@ -42,8 +40,6 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  /*line-height: 50px;
-  font-size: 20px;*/
   transition: 0.5s;
   transform: rotate(-45deg) scale(0.7);
 }
@@ -56,16 +52,21 @@
   transform: rotate(-45deg) scale(0.8);
 }
 .share ul.active li:nth-child(1) {
+  top: 80px;
+  left: -80px;
+  transition-delay: 0.25s;
+}
+.share ul.active li:nth-child(2) {
   top: 0;
   left: -80px;
   transition-delay: 0s;
 }
-.share ul.active li:nth-child(2) {
+.share ul.active li:nth-child(3) {
   top: -80px;
   left: -80px;
   transition-delay: 0.25s;
 }
-.share ul.active li:nth-child(3) {
+.share ul.active li:nth-child(4) {
   top: -80px;
   left: 0;
   transition-delay: 0s;
@@ -112,4 +113,6 @@
 .deleteRow {
   content: url("../../../assets/006-delete-row.png");
 }
-
+.setting {
+  content: url("../../../assets/settings.png");
+}

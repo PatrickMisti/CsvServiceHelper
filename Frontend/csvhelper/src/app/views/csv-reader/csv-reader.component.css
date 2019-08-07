@@ -23,16 +23,46 @@
   font-size: 18px;
 }
 .btn-styling {
-  margin-top: 7px;
-  min-height: 80%;
-  min-width: 50%;
-  font-size: 18px;
-  font-weight: bold;
+  margin-top: 0.7em;
+  min-height: 70%;
+  min-width: 40%;
+  font-size: 16px;
+  font-weight: bolder;
   border-radius: 30px;
   background: darkred;
-  color: #000;
+  color: white;
+}
+.btn-split-styling {
+  margin-top: 1.5em;
+  font-size: 16px;
+  font-weight: bolder;
+  border-radius: 30px;
+  background: darkred;
+  color: white;
 }
 td {
   font-size: 18px;
   font-weight: bold;
+}
+::ng-deep .mat-menu-panel  {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-width: 30px !important;
+}
+::ng-deep .mat-menu-content {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.mat-menu-item {
+  width: 35px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 20px;
+}
+.item-styling:hover {
+  background-color: darkgray;
+}
+.item-styling {
+  background-color: darkgray;
 }

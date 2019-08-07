@@ -1,14 +1,14 @@
 <div>
-  <div class="container container-styling">
-    <table id="table" class="table table-bordered" *ngIf="tableData != null && tableData != ''">
+  <div class="container container-styling table-responsive-md">
+    <table id="table" class="table table-hover table-bordered" *ngIf="tableData != null && tableData != ''">
       <thead>
         <tr>
           <td style="visibility: hidden"></td>
-          <td class="dropdown" *ngFor="let it of tableData[0].split(';');let i = index;">
-            <button [id]="'ddBtn' + i" class="dropbtn btn-secondary dropdown-toggle">{{articles[0]}}</button>
+          <td class="dropdown" *ngFor="let it of tableData[0].split(this.split);let i = index;">
+            <button [id]="'ddBtn' + i"  class="dropbtn btn-secondary dropdown-toggle">{{articles[0]}}</button>
             <ul class="dropdown-content">
               <ng-container *ngFor="let it of articles" >
-                <li  *ngIf="it != (dV.getElementById('ddBtn' + i) != null ? dV.getElementById('ddBtn' + i).innerText:articles[0])"  (click)="setParamsForDataBase(it,'ddBtn' + i)">
+                <li  *ngIf="it != (dV.getElementById('ddBtn' + i) != null ? dV.getElementById('ddBtn' + i).innerText:articles[0])"  (click)="dV.getElementById('ddBtn' + i).innerText = it">
                   {{it}}
                 </li>
               </ng-container>
@@ -19,8 +19,8 @@
       <tbody>
         <tr *ngFor="let item of tableData;let i = index;" [id]="'row' + i">
           <td><input [id]="'check'+i" type="checkbox"></td>
-          <td *ngFor="let it of item.split(';')">
-            {{it}}
+          <td (click)="editPopUp(item)" *ngFor="let it of item.split(this.split)">
+            <label>{{it}}</label>
           </td>
         </tr>
       </tbody>

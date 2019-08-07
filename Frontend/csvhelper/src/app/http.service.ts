@@ -8,7 +8,9 @@ export class HttpService {
 
   constructor() { }
 
-  async sendArtikelData(data) {
+  // http://clearingcenter.sport2000.at/putModelTextservice/service.asmx
+  static async sendModelTextData(data) {
+    console.log('Daten versendet');
     await fetch('');
   }
 }

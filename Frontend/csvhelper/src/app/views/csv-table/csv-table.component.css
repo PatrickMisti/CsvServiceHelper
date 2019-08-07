@@ -2,13 +2,18 @@ table {
   height: 100%;
   width: 100%;
 }
-table, th, td {
+/*table, th, td {
   font-size: 20px;
   font-weight: bold;
   border: 1px solid black;
+}*/
+td {
+  padding-left: 10px;
 }
-tbody:after {
-  border: 1px solid black;
+tbody {
+  /*// border: 1px solid black;*/
+  /*text-align: center;*/
+  /*padding-left: 10px;*/
 }
 .container-styling {
   align-items: center;
