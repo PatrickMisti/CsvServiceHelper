@@ -99,11 +99,11 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
           knapp.disabled = CsvOverviewBottomSheetComponent.btnCheckForForm(valu, dds);                      // disabled Speicher Btn nur wenn nicht im Input steht
         });
       }
-    }
-    if (this.data.btnDisable === 1) {
-      document.getElementById('spinner-form').classList.remove('spinner-style-toggle');
-      document.getElementById('input-form').classList.add('spinner-style-toggle');
-      sleep(3000).then(() => this.bottomSheetRef.dismiss());       // falls alles schon gesetzt ist bottomSheet close
+      if (this.data.btnDisable === 1) {
+        document.getElementById('spinner-form').classList.remove('spinner-style-toggle');
+        document.getElementById('input-form').classList.add('spinner-style-toggle');
+        sleep(2000).then(() => this.bottomSheetRef.dismiss());       // falls alles schon gesetzt ist bottomSheet close
+      }
     } else {
       const knapp = document.querySelector('#submitBtn') as HTMLButtonElement;
       knapp.disabled = false;
