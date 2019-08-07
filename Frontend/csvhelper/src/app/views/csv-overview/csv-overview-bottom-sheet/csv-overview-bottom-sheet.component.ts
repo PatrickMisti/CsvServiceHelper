@@ -11,13 +11,24 @@ import {ModelText} from '../../../entities/model-text';
   styleUrls: ['./csv-overview-bottom-sheet.component.css']
 })
 export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
-  myArray: FormArray;
-  list = [];
-  placeholderList = [];
-  linear = false;
 
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private bottomSheetRef: MatBottomSheetRef<CsvOverviewBottomSheetComponent>,
               private formBuilder: FormBuilder, private global: Globals) {
+  }
+  myArray: FormArray;
+  list = [];
+  dropdownArray = [];
+  placeholderList = [];
+  linear = false;
+
+  static btnCheckForForm(inputFields, dd) {
+    let bool = false;
+    for (let i = 0; i < inputFields.length; i++) {
+        if ((dd[i]  === 0  || dd[i] === undefined) && inputFields[i] === '')  {
+          bool = true;
+        }
+      }
+    return bool;
   }
 
   ngOnInit() {
@@ -29,15 +40,22 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
     this.placeholderList = Object.values(this.global.modelText);
     // nur die ersten drei sind wichtig
     this.placeholderList.splice(this.placeholderList.length / 2, this.placeholderList.length);
+    // übergibt dropdownMenu von overview
+    this.dropdownArray = this.data.ddMenu;
     // übergibt ob stepper frei oder gesperrt ist
     this.linear = this.data.linear;
     let counter = -1;
     // FormArray für jedes Element im Placeholder
     this.myArray = new FormArray(this.placeholderList.map(() => {
       counter++;
-      if (this.placeholderList[counter] === '') {                                                 // falls nicht im placeholder ist
-        return this.formBuilder.group({validators: ['', Validators.required]});      // required setzten
-      } else {
+      // falls nicht im placeholder ist
+      try {
+        if (this.placeholderList[counter] === '' && !this.dropdownArray.find(p => p === ModelText.getOrder()[counter])) {
+          return this.formBuilder.group({validators: ['', Validators.required]});      // required setzten
+        } else {
+          return this.formBuilder.group({validators: ['.', !Validators.required]});    // sonst nicht
+        }
+      } catch (e) {
         return this.formBuilder.group({validators: ['.', !Validators.required]});    // sonst nicht
       }
     }));
@@ -62,17 +80,23 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
     if (this.linear === true) {
       const inputs = document.querySelectorAll('[type="text"]');                                // hollt sich alle input felder
       const knapp = document.querySelector('#submitBtn') as HTMLButtonElement;                  // hollt sich submit Button
-      knapp.disabled = false;
-
+      const dd = [];
+      const all = [];
+      inputs.forEach(v => {
+        dd.push(this.dropdownArray.find(p => p === ModelTextEnum[v.id]));
+        all.push((v as HTMLInputElement).value);
+      });
+      knapp.disabled = CsvOverviewBottomSheetComponent.btnCheckForForm(all, dd);
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('input', () => {
           const valu = [];
+          const dds = dd;
           inputs.forEach(v => {
-            valu.push((v as HTMLInputElement).value);
-
-          });    // hollt sich alle Ergebnisse von denn Inputs
-          knapp.disabled = valu.includes('');                                         // disabled Speicher Btn nur wenn nicht im Input steht
+            valu.push((v as HTMLInputElement).value);                       // hollt sich alle Ergebnisse von denn Inputs
+          });
+          // tslint:disable-next-line:max-line-length
+          knapp.disabled = CsvOverviewBottomSheetComponent.btnCheckForForm(valu, dds);                      // disabled Speicher Btn nur wenn nicht im Input steht
         });
       }
     }
@@ -80,10 +104,12 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
       document.getElementById('spinner-form').classList.remove('spinner-style-toggle');
       document.getElementById('input-form').classList.add('spinner-style-toggle');
       sleep(3000).then(() => this.bottomSheetRef.dismiss());       // falls alles schon gesetzt ist bottomSheet close
+    } else {
+      const knapp = document.querySelector('#submitBtn') as HTMLButtonElement;
+      knapp.disabled = false;
     }
   }
 }
-
 async function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }

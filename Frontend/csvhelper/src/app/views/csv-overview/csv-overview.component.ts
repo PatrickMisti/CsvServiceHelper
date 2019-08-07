@@ -102,6 +102,7 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   settingForDropdown() {
+    console.log('hallo');
     // Aufruf des bottomSheet
     const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
       data: {linear: false}
@@ -116,7 +117,7 @@ export class CsvOverviewComponent implements OnInit {
       results = this.rowChecker(dropdownArray);
       if (this.tableData.length !== 0 && results > 0) {
         const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
-          data: {linear: true, btnDisable: results},
+          data: {linear: true, btnDisable: results, ddMenu: dropdownArray},
           disableClose: true                            // Benuter soll denn bottomSheet nicht zu machen
         });
         // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
