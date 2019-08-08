@@ -93,7 +93,6 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   settingForDropdown() {
-    console.log('hallo');
     // Aufruf des bottomSheet
     const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
       data: {linear: false}
@@ -112,7 +111,10 @@ export class CsvOverviewComponent implements OnInit {
           disableClose: true                            // Benuter soll denn bottomSheet nicht zu machen
         });
         // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
-        bottomSheetRef.afterDismissed().subscribe(() => this.arrayModelBuilder(dropdownArray).then(res => this.sendToService(res)));
+        bottomSheetRef.afterDismissed()
+            .subscribe(() => this.arrayModelBuilder(dropdownArray)
+            .then(res => this.sendToService(res))
+                .then(() => this.deleteModelText()));
       } else {
         alert('Bitte Dropdowns richtig füllen mit Modelnumber und Text!!!');
       }
@@ -167,8 +169,12 @@ export class CsvOverviewComponent implements OnInit {
     return resultList;
   }
 
+  async deleteModelText() {
+    this.globalVariables.modelTextChange(new ModelText('AT', '', '', '', '', ''));
+    this.deleteTable();
+  }
+
   async sendToService(result) {
-    console.log(result);
-    await HttpService.sendModelTextData(result);
+    await this.client.sendModelTextData(result);
   }
 }

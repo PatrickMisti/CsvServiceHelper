@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {GlobalService} from '../../services/global.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-csv-reader',
@@ -9,9 +10,11 @@ import {GlobalService} from '../../services/global.service';
 export class CsvReaderComponent {
   resultPath = '';
   split = '';
+  tables = [];
 
   constructor(private globalVariables: GlobalService) {
     this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
+    this.globalVariables.GlobalTableData.subscribe(value => this.tables = value);
   }
 
   fileDialogOpen() {
@@ -30,6 +33,11 @@ export class CsvReaderComponent {
     reader.readAsText(event.target.files[0]);
     reader.onload = () => {
       // datenbeschaffung von der Csv-File
+      /*const fileData = reader.result;
+      const wb = XLSX.read;*/
+
+
+      console.log(reader.result);
       this.globalVariables.tableDataChange(reader.result.toString());      // Daten an Service liefern
     };
     // muss gemacht werden um files wieder aufzumachen sonst wird onChange nicht aufgerufen
