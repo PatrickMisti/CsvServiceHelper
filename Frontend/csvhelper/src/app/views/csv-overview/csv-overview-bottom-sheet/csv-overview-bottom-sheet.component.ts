@@ -74,7 +74,7 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
     modelText.DltCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
     modelText.SupplierId = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
     modelText.Brand = (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value;
-    this.globalVariables.GlobalModelText.next(this.modelText);
+    this.globalVariables.modelTextChange(this.modelText);
   }
 
   ngAfterViewInit(): void {

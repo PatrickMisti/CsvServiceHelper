@@ -26,6 +26,10 @@ export class GlobalService {
     this.globalTableData.next(dataSplit);
   }
 
+  tableChange(data: string[]) {
+    this.globalTableData.next(data);
+  }
+
   get GlobalModelText(): BehaviorSubject<ModelText> {
     return this.globalModelText;
   }

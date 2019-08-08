@@ -14,7 +14,6 @@ import {GlobalService} from '../../services/global.service';
 export class CsvOverviewComponent implements OnInit {
 
   active = false;
-  tableWare: string | ArrayBuffer;
   tableData = [];
   loading = false;
   split: string;
@@ -23,6 +22,7 @@ export class CsvOverviewComponent implements OnInit {
   constructor(private client: HttpService, private globalVariables: GlobalService, private bottomSheet: MatBottomSheet) {
     this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
     this.globalVariables.GlobalModelText.subscribe(value => this.modelText = value);
+    this.globalVariables.GlobalTableData.subscribe(value => this.tableData = value);
   }
 
   ngOnInit(): void {
@@ -53,7 +53,8 @@ export class CsvOverviewComponent implements OnInit {
     const filePicker = document.querySelector('#filePicker') as HTMLInputElement;
     if (table != null) {
       table.innerHTML = '';                               // löschung der Tabelle
-      this.tableWare = null;                              // löschung der Daten
+      this.tableData = [];
+      this.globalVariables.tableChange(this.tableData);
       table.parentNode.removeChild(table);                // entfernen des Tables
       filePicker.value = '';                              // löschen des Pfades
       // alert('Erfolgreich gelöscht');
@@ -73,7 +74,7 @@ export class CsvOverviewComponent implements OnInit {
       const rows = Array.from(table.rows);
       // schmeißt die erste Reihe weg
       rows.shift();
-      if (this.tableWare != null) {
+      if (this.tableData != null) {
         for (let i = 0; i < rows.length; i++) {
           const check = rows[i].firstElementChild.children[0] as HTMLInputElement;
           if (check.checked === true) {                     // ob input type checkbox true ist
@@ -83,21 +84,12 @@ export class CsvOverviewComponent implements OnInit {
             i--;                                            // da keine Löcher beim löschen entstehen muss eins zurück gesetzt werden
           }
         }
+        this.globalVariables.tableChange(this.tableData);
       }
       if (this.tableData.length === 0) {
         this.deleteTable();                                 // falls kein Datensatz mehr vorhanden ist löscht auch thead
       }
     }
-  }
-
-  fillTableWare(event: string | ArrayBuffer) {
-    // holt Daten von csv-reader.component
-    this.tableWare = event;
-  }
-
-  fillTableData(event) {
-    // holt aufgesplittet die Daten von csv-table.component
-    this.tableData = event;
   }
 
   settingForDropdown() {
