@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Globals} from '../../globals';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-csv-reader',
@@ -10,9 +10,12 @@ export class CsvReaderComponent implements OnInit {
 
   resultPath = '';
   csvData: string | ArrayBuffer;
+  split = '';
   @Output() tableWares = new EventEmitter<string | ArrayBuffer>();
 
-  constructor(private global: Globals) { }
+  constructor(private globalVariables: GlobalService) {
+    this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
+  }
 
   ngOnInit() {
   }
@@ -23,7 +26,7 @@ export class CsvReaderComponent implements OnInit {
   }
 
   switchSplitter(split) {
-    this.global.splitter = split;
+    this.globalVariables.splitChange(split);
   }
 
   chosenFile(event) {

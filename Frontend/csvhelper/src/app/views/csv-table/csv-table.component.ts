@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {ModelTextEnum} from '../../model-text.enum';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {TableEditPopupComponent} from './table-edit-popup/table-edit-popup.component';
-import {Globals} from '../../globals';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-csv-table',
@@ -17,8 +17,8 @@ export class CsvTableComponent implements OnInit, OnChanges {
   dV = document;
   split = '';
 
-  constructor(public dialog: MatDialog, private global: Globals) {
-    this.split = this.global.splitter;
+  constructor(public dialog: MatDialog, private globalVariables: GlobalService) {
+    this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
   }
 
   ngOnInit() {
@@ -27,7 +27,6 @@ export class CsvTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.split = this.global.splitter;
     // wenn ein File reinkommt zur Bearbitung
     // @Input wird verwendet um überhaupt die Chance zu haben ngOnChange aufzurufen
     const file = changes.csvFile.currentValue;

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ModelText} from '../../entities/model-text';
 import {ModelTextEnum} from '../../model-text.enum';
-import {HttpService} from '../../http.service';
-import {Globals} from '../../globals';
+import {HttpService} from '../../services/http.service';
 import {CsvOverviewBottomSheetComponent} from './csv-overview-bottom-sheet/csv-overview-bottom-sheet.component';
 import {MatBottomSheet} from '@angular/material';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-csv-overview',
@@ -20,9 +20,9 @@ export class CsvOverviewComponent implements OnInit {
   split: string;
   modelText: ModelText;
 
-  constructor(private client: HttpService, private global: Globals, private bottomSheet: MatBottomSheet) {
-    this.split = this.global.splitter;
-    this.modelText = this.global.modelText;
+  constructor(private client: HttpService, private globalVariables: GlobalService, private bottomSheet: MatBottomSheet) {
+    this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
+    this.globalVariables.GlobalModelText.subscribe(value => this.modelText = value);
   }
 
   ngOnInit(): void {
@@ -98,7 +98,6 @@ export class CsvOverviewComponent implements OnInit {
   fillTableData(event) {
     // holt aufgesplittet die Daten von csv-table.component
     this.tableData = event;
-    this.split = this.global.splitter;
   }
 
   settingForDropdown() {

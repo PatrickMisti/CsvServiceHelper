@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModelTextEnum} from '../../../model-text.enum';
-import {Globals} from '../../../globals';
 import {ModelText} from '../../../entities/model-text';
+import {GlobalService} from '../../../services/global.service';
 
 @Component({
   selector: 'app-csv-overview-bottom-sheet',
@@ -11,15 +11,16 @@ import {ModelText} from '../../../entities/model-text';
   styleUrls: ['./csv-overview-bottom-sheet.component.css']
 })
 export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
-
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private bottomSheetRef: MatBottomSheetRef<CsvOverviewBottomSheetComponent>,
-              private formBuilder: FormBuilder, private global: Globals) {
-  }
   myArray: FormArray;
   list = [];
   dropdownArray = [];
   placeholderList = [];
   linear = false;
+  modelText: ModelText;
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private bottomSheetRef: MatBottomSheetRef<CsvOverviewBottomSheetComponent>,
+              private formBuilder: FormBuilder, private globalVariables: GlobalService) {
+    this.globalVariables.GlobalModelText.subscribe(value => this.modelText = value);
+  }
 
   static btnCheckForForm(inputFields, dd) {
     let bool = false;
@@ -37,7 +38,7 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
     // nur die ersten drei sind wichtig
     this.list.splice(this.list.length / 2, this.list.length);
     // umwandlung von der Entity zu einer Liste
-    this.placeholderList = Object.values(this.global.modelText);
+    this.placeholderList = Object.values(this.modelText);
     // nur die ersten drei sind wichtig
     this.placeholderList.splice(this.placeholderList.length / 2, this.placeholderList.length);
     // übergibt dropdownMenu von overview
@@ -68,11 +69,12 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
   }
 
   fillGlobalModelText() {
-    const modelText = this.global.modelText;              // füllt modelText global
+    const modelText = this.modelText;              // füllt modelText global
     const orderList = ModelText.getOrder();
     modelText.DltCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
     modelText.SupplierId = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
     modelText.Brand = (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value;
+    this.globalVariables.GlobalModelText.next(this.modelText);
   }
 
   ngAfterViewInit(): void {
