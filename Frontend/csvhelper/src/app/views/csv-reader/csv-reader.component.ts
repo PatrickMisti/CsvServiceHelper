@@ -37,7 +37,6 @@ export class CsvReaderComponent {
       let jsonObject;
       workbook.SheetNames.forEach((sheetName) => {
         jsonObject =  XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-        console.log(jsonObject);
         this.globalVariables.tableDataChangeArray(this.jsonImprove(jsonObject));
       });
     };
@@ -61,7 +60,6 @@ export class CsvReaderComponent {
       }
       endResult.push(result.join(this.split));
     });
-    console.log(endResult);
     return endResult;
   }
 }
