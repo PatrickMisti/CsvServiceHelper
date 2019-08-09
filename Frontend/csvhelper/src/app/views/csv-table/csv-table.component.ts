@@ -10,8 +10,6 @@ import {GlobalService} from '../../services/global.service';
   styleUrls: ['./csv-table.component.css']
 })
 export class CsvTableComponent implements OnInit {
-  /*@Input() csvFile: string;
-  @Output() csvList = new EventEmitter();*/
   tableData = [];
   articles = [];
   dV = document;
@@ -49,7 +47,4 @@ export class CsvTableComponent implements OnInit {
       }
     });
   }
-
-
-  
 }

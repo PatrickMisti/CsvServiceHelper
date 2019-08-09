@@ -28,6 +28,7 @@ export class CsvReaderComponent {
 
   chooseFile(event) {
     const target: DataTransfer = (event.target) as DataTransfer;
+    this.resultPath = (window.navigator.userAgent.search('Electron') !== -1) ? event.target.files[0].path : event.target.files[0].name;
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
       const data = e.target.result;
