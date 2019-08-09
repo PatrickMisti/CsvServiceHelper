@@ -3,7 +3,7 @@
     <div class="form-control card-styling">
       <div class="col-auto element-styling">
         <button class="btn btn-styling" (click)="fileDialogOpen()">Datei auswählen</button>
-        <input id="fileDialog" type="file" hidden style="display: none" (change)="chosenFile($event)">
+        <input id="fileDialog" type="file" hidden style="display: none" (change)="chooseFile($event)">
       </div>
       <div class="col element-styling">
         <input [(ngModel)]="resultPath" id="filePicker" class="input-styling" disabled/>

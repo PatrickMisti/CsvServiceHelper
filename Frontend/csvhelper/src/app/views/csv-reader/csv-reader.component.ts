@@ -26,21 +26,42 @@ export class CsvReaderComponent {
     this.globalVariables.splitChange(split);
   }
 
-  chosenFile(event) {
-    // um aus der CSV lesen zu könnnen
-    this.resultPath = event.target.files[0].path;
-    const reader = new FileReader();
-    reader.readAsText(event.target.files[0]);
-    reader.onload = () => {
-      // datenbeschaffung von der Csv-File
-      /*const fileData = reader.result;
-      const wb = XLSX.read;*/
-
-
-      console.log(reader.result);
-      this.globalVariables.tableDataChange(reader.result.toString());      // Daten an Service liefern
+  chooseFile(event) {
+    const target: DataTransfer = (event.target) as DataTransfer;
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, {
+        type: 'binary'
+      });
+      let jsonObject;
+      workbook.SheetNames.forEach((sheetName) => {
+        jsonObject =  XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        console.log(jsonObject);
+        this.globalVariables.tableDataChangeArray(this.jsonImprove(jsonObject));
+      });
     };
-    // muss gemacht werden um files wieder aufzumachen sonst wird onChange nicht aufgerufen
-    (document.getElementById('fileDialog')as HTMLInputElement).value = '';
+    reader.readAsBinaryString(target.files[0]);
+    (document.getElementById('fileDialog') as HTMLInputElement).value = '';
+  }
+
+  jsonImprove(json) {
+    const endResult = [];
+    json.map(e => {
+      let stringly = '';
+      const result = [];
+      for (const item in e) {
+        const check = e[item];
+        if (Number.isInteger(check)) {
+          result.push(check.toString());
+        } else {
+          stringly = check.replace(/(?:\r\n|\n|\r)/g, ' ');
+          result.push('' + stringly);
+        }
+      }
+      endResult.push(result.join(this.split));
+    });
+    console.log(endResult);
+    return endResult;
   }
 }

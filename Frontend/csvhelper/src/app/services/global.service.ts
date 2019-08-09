@@ -26,6 +26,10 @@ export class GlobalService {
     this.globalTableData.next(dataSplit);
   }
 
+  tableDataChangeArray(data: string[]) {
+    this.globalTableData.next(data);
+  }
+
   tableChange(data: string[]) {
     this.globalTableData.next(data);
   }
