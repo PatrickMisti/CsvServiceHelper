@@ -101,7 +101,6 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   safeTable() {
-    console.log('hallo');
     let results;                  // wir gebraucht für den rowChecker
     try {
       const dropdownArray = this.rowChooseArrayBuilder();                       // holt sich alles

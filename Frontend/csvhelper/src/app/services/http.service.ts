@@ -1,23 +1,32 @@
 import { Injectable } from '@angular/core';
-
+import * as X2JS from 'x2js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-  urlModelText = 'http://clearingcenter.sport2000.at/putModelTextservice/service.asmx';
+  urlModelText = 'http://clearingcenter.sport2000.at/putModelTextservice/service.asmx?wsdl';
+  private GLN = '9120048150008';
+  private Password = '@V5mtKF0j§';
 
   constructor() { }
 
   async sendModelTextData(data = []) {
-    console.log('Daten versendet');
-    /*await fetch(this.urlModelText, {
+
+    const x2js = new X2JS();
+    await fetch(this.urlModelText, {
       method: 'POST',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(response => response.json());*/
+      mode: 'no-cors',
+      headers: this.getHeader(),
+      body: data.map(res => x2js.js2xml(res)).toString()
+    }).catch((error) => console.log(error))
+        .then(() => console.log('Daten versendet'));
+  }
+
+  getHeader() {
+    const header = new Headers();
+    header.append('Content-Type', 'text/xml');
+    header.append('Authorization', 'GLN:' + this.GLN + 'Password:' + this.Password);
+    return header;
   }
 }

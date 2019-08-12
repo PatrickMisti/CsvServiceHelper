@@ -1,8 +1,6 @@
 import {ModelTextEnum} from '../model-text.enum';
 
 export class ModelText {
-  private GLN = '79513';
-  private Password = 'adslkföjakn';
   constructor(public DltCountryCode: string = '', public SupplierId: string = '', public Brand: string = '',
               public ModelNumber: string = '', public Description: string = '', public Text: string = '') {}
 
