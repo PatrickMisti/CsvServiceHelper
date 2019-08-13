@@ -26,6 +26,11 @@ namespace CsvServiceHelperBackend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors(o => o.AddPolicy("csv", b =>
+            {
+                b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +44,7 @@ namespace CsvServiceHelperBackend
             {
                 app.UseHsts();
             }
-
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

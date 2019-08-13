@@ -1,24 +1,24 @@
 import {ModelTextEnum} from '../model-text.enum';
 
 export class ModelText {
-  constructor(public DltCountryCode: string = '', public SupplierId: string = '', public Brand: string = '',
+  constructor(public DLTCountryCode: string = '', public SupplierID: string = '', public Brand: string = '',
               public ModelNumber: string = '', public Description: string = '', public Text: string = '') {}
 
 
   get dltCountryCode(): string {
-    return this.DltCountryCode;
+    return this.DLTCountryCode;
   }
 
   set dltCountryCode(value: string) {
-    this.DltCountryCode = value;
+    this.DLTCountryCode = value;
   }
 
   get supplierId(): string {
-    return this.SupplierId;
+    return this.SupplierID;
   }
 
   set supplierId(value: string) {
-    this.SupplierId = value;
+    this.SupplierID = value;
   }
 
   get brand(): string {

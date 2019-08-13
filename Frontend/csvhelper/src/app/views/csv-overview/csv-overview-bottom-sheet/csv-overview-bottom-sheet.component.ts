@@ -71,8 +71,8 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
   fillGlobalModelText() {
     const modelText = this.modelText;              // füllt modelText global
     const orderList = ModelText.getOrder();
-    modelText.DltCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
-    modelText.SupplierId = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
+    modelText.DLTCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
+    modelText.SupplierID = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
     modelText.Brand = (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value;
     this.globalVariables.modelTextChange(this.modelText);
   }
