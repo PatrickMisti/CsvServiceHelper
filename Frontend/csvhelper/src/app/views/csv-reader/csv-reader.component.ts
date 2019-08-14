@@ -1,20 +1,20 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Globals} from '../../globals';
+import {Component} from '@angular/core';
+import {GlobalService} from '../../services/global.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-csv-reader',
   templateUrl: './csv-reader.component.html',
   styleUrls: ['./csv-reader.component.css']
 })
-export class CsvReaderComponent implements OnInit {
-
+export class CsvReaderComponent {
   resultPath = '';
-  csvData: string | ArrayBuffer;
-  @Output() tableWares = new EventEmitter<string | ArrayBuffer>();
+  split = '';
+  tables = [];
 
-  constructor(private global: Globals) { }
-
-  ngOnInit() {
+  constructor(private globalVariables: GlobalService) {
+    this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
+    this.globalVariables.GlobalTableData.subscribe(value => this.tables = value);
   }
 
   fileDialogOpen() {
@@ -23,20 +23,44 @@ export class CsvReaderComponent implements OnInit {
   }
 
   switchSplitter(split) {
-    this.global.splitter = split;
+    this.globalVariables.splitChange(split);
   }
 
-  chosenFile(event) {
-    // um aus der CSV lesen zu könnnen
-    this.resultPath = event.target.files[0].path;
-    const reader = new FileReader();
-    reader.readAsText(event.target.files[0]);
-    reader.onload = () => {
-      // datenbeschafung von der Csv-File
-      this.csvData = reader.result;
-      this.tableWares.emit(this.csvData);       // Daten an Overview liefern
+  chooseFile(event) {
+    const target: DataTransfer = (event.target) as DataTransfer;
+    this.resultPath = (window.navigator.userAgent.search('Electron') !== -1) ? event.target.files[0].path : event.target.files[0].name;
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, {
+        type: 'binary'
+      });
+      let jsonObject;
+      workbook.SheetNames.forEach((sheetName) => {
+        jsonObject =  XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        this.globalVariables.tableDataChangeArray(this.jsonImprove(jsonObject));
+      });
     };
-    // muss gemacht werden um files wieder aufzumachen sonst wird onChange nicht aufgerufen
-    (document.getElementById('fileDialog')as HTMLInputElement).value = '';
+    reader.readAsBinaryString(target.files[0]);
+    (document.getElementById('fileDialog') as HTMLInputElement).value = '';
+  }
+
+  jsonImprove(json) {
+    const endResult = [];
+    json.map(e => {
+      let stringly = '';
+      const result = [];
+      for (const item in e) {
+        const check = e[item];
+        if (Number.isInteger(check)) {
+          result.push(check.toString());
+        } else {
+          stringly = check.replace(/(?:\r\n|\n|\r)/g, ' ');
+          result.push('' + stringly);
+        }
+      }
+      endResult.push(result.join(this.split));
+    });
+    return endResult;
   }
 }
