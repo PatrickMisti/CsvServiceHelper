@@ -25,9 +25,10 @@ namespace CsvServiceHelperBackend.Persistence
             return modelTextUow.Get();
         }
 
-        public void postModelText(ModelText model)
+        public void postModelText(List<ModelText> model)
         {
-            modelTextUow.Create(model);
+            model.ForEach(p => modelTextUow.Create(p));
+            db.SaveChanges();
         }
     }
 }

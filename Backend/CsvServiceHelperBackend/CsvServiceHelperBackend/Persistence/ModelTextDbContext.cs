@@ -15,9 +15,10 @@ namespace CsvServiceHelperBackend.Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Data Source=ccserver;Initial Catalog=DLT;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Persist Security Info=True;User ID=DCC-Administration;Password=Ed-§fAQdi#");
+                @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ModelText;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
-
+        //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ModelText;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+        //Data Source=ccserver;Initial Catalog=DLT;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Persist Security Info=True;User ID=DCC-Administration;Password=Ed-§fAQdi#
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ModelText>()

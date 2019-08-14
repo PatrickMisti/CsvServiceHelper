@@ -1,56 +1,56 @@
 import {ModelTextEnum} from '../model-text.enum';
 
 export class ModelText {
-  constructor(public DLTCountryCode: string = '', public SupplierID: string = '', public Brand: string = '',
-              public ModelNumber: string = '', public Description: string = '', public Text: string = '') {}
+  constructor(public dltCountryCode: string = '', public supplierID: string = '', public brand: string = '',
+              public modelNumber: string = '', public description: string = '', public text: string = '') {}
 
 
-  get dltCountryCode(): string {
-    return this.DLTCountryCode;
+  get DltCountryCode(): string {
+    return this.dltCountryCode;
   }
 
-  set dltCountryCode(value: string) {
-    this.DLTCountryCode = value;
+  set DltCountryCode(value: string) {
+    this.dltCountryCode = value;
   }
 
-  get supplierId(): string {
-    return this.SupplierID;
+  get SupplierID(): string {
+    return this.supplierID;
   }
 
-  set supplierId(value: string) {
-    this.SupplierID = value;
+  set SupplierID(value: string) {
+    this.supplierID = value;
   }
 
-  get brand(): string {
-    return this.Brand;
+  get Brand(): string {
+    return this.brand;
   }
 
-  set brand(value: string) {
-    this.Brand = value;
+  set Brand(value: string) {
+    this.brand = value;
   }
 
-  get modelNumber(): string {
-    return this.ModelNumber;
+  get ModelNumber(): string {
+    return this.modelNumber;
   }
 
-  set modelNumber(value: string) {
-    this.ModelNumber = value;
+  set ModelNumber(value: string) {
+    this.modelNumber = value;
   }
 
-  get description(): string {
-    return this.Description;
+  get Description(): string {
+    return this.description;
   }
 
-  set description(value: string) {
-    this.Description = value;
+  set Description(value: string) {
+    this.description = value;
   }
 
-  get text(): string {
-    return this.Text;
+  get Text(): string {
+    return this.text;
   }
 
-  set text(value: string) {
-    this.Text = value;
+  set Text(value: string) {
+    this.text = value;
   }
 
   static getOrder() {

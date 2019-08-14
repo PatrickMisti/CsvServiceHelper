@@ -34,11 +34,10 @@ namespace CsvServiceHelperBackend.Controllers
 
         // POST api/values()
         [HttpPost]
-        public void Post([FromBody] ModelText model)
+        public ActionResult<int> Post([FromBody] List<ModelText> model)
         {
-            Console.WriteLine(model);
-            //model.ForEach(p => repo.postModelText(p));
             repo.postModelText(model);
+            return Response.StatusCode;
         }
     }
 }

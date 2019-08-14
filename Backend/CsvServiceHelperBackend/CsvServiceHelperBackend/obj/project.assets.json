@@ -12539,23 +12539,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\patrickmi\\.nuget\\packages\\": {},
+    "C:\\Users\\Patrick\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Work\\GitHub\\CsvServiceHelper\\Backend\\CsvServiceHelperBackend\\CsvServiceHelperBackend\\CsvServiceHelperBackend.csproj",
+      "projectUniqueName": "C:\\Home\\GitHub\\CsvServiceHelper\\Backend\\CsvServiceHelperBackend\\CsvServiceHelperBackend\\CsvServiceHelperBackend.csproj",
       "projectName": "CsvServiceHelperBackend",
-      "projectPath": "C:\\Work\\GitHub\\CsvServiceHelper\\Backend\\CsvServiceHelperBackend\\CsvServiceHelperBackend\\CsvServiceHelperBackend.csproj",
-      "packagesPath": "C:\\Users\\patrickmi\\.nuget\\packages\\",
-      "outputPath": "C:\\Work\\GitHub\\CsvServiceHelper\\Backend\\CsvServiceHelperBackend\\CsvServiceHelperBackend\\obj\\",
+      "projectPath": "C:\\Home\\GitHub\\CsvServiceHelper\\Backend\\CsvServiceHelperBackend\\CsvServiceHelperBackend\\CsvServiceHelperBackend.csproj",
+      "packagesPath": "C:\\Users\\Patrick\\.nuget\\packages\\",
+      "outputPath": "C:\\Home\\GitHub\\CsvServiceHelper\\Backend\\CsvServiceHelperBackend\\CsvServiceHelperBackend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\patrickmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Patrick\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

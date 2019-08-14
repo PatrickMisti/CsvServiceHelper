@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,15 +14,12 @@ export class HttpService {
   constructor() { }
 
   async sendModelTextData(data) {
-    const i = JSON.stringify(data[0]);
-    await fetch('http://localhost:57713/api/modeltexts', {
+    await fetch(this.my, {
       method: 'POST',
-      mode: 'no-cors',
-      body: i,
+      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json'
       }
-    }).catch((error) => console.log(error))
-        .then(() => console.log('Daten versendet'));
+    }).then(res => alert(res.status)).catch((error) => console.log(error));
   }
 }
