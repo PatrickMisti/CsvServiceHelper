@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using CsvServiceHelperBackend.Entity;
 using CsvServiceHelperBackend.Persistence;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace CsvServiceHelperBackend.Controllers
 {
-    [Route("api/modelText")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class ModelTextController : ControllerBase
+    [EnableCors("csv")]
+    public class ModelTextsController : ControllerBase
     {
         UnitOfWork repo = new UnitOfWork();
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<ModelText>> Get()
@@ -27,23 +32,12 @@ namespace CsvServiceHelperBackend.Controllers
             return "value";
         }
 
-        // POST api/values
+        // POST api/values()
         [HttpPost]
-        public void Post([FromBody] List<ModelText> model)
+        public ActionResult<int> Post([FromBody] List<ModelText> model)
         {
-            model.ForEach(p => repo.postModelText(p));
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            repo.postModelText(model);
+            return Response.StatusCode;
         }
     }
 }

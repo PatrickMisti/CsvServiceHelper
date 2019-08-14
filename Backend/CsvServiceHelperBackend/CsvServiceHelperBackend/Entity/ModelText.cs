@@ -10,20 +10,19 @@ namespace CsvServiceHelperBackend.Entity
     public class ModelText
     {
         [Column(Order = 1)]
-        [MaxLength(2),Required]
+        [Required]
         public string DLTCountryCode { get; set; }
         [Column(Order = 2)]
-        [MaxLength(35),Required]
+        [Required]
         public string SupplierID { get; set; }
         [Column(Order = 3)]
-        [MaxLength(35),Required]
+        [Required]
         public string Brand { get; set; }
         [Column(Order = 4)]
-        [MaxLength(35),Required]
-        public string ModelNumber { get; set; }
-        [MaxLength(256),Required]
-        public string Description { get; set; }
         [Required]
+        public string ModelNumber { get; set; }
+        [Required]
+        public string Description { get; set; }
         public string Text { get; set; }
     }
 }
