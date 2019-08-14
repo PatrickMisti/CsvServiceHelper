@@ -3,17 +3,18 @@
     <div class="form-control card-styling">
       <div class="col-auto element-styling">
         <button class="btn btn-styling" (click)="fileDialogOpen()">Datei auswählen</button>
-        <input id="fileDialog" type="file" hidden style="display: none" (change)="chosenFile($event)">
+        <input id="fileDialog" type="file" hidden style="display: none" (change)="chooseFile($event)">
       </div>
       <div class="col element-styling">
         <input [(ngModel)]="resultPath" id="filePicker" class="input-styling" disabled/>
       </div>
       <div class="col-auto">
-        <button class="btn btn-split-styling" [matMenuTriggerFor]="menu">{{this.global.splitter}}</button>
+        <button class="btn btn-split-styling" [matMenuTriggerFor]="menu">{{this.split}}</button>
         <mat-menu #menu>
-          <button *ngIf="this.global.splitter != ';'" mat-menu-item (click)="switchSplitter(';')">;</button>
-          <button *ngIf="this.global.splitter != ','" mat-menu-item (click)="switchSplitter(',')">,</button>
-          <input class="item-styling" mat-menu-item matInput placeholder="۞" (click)="$event.stopPropagation()" [(ngModel)]="this.global.splitter">
+          <button *ngIf="this.split != ';'" mat-menu-item (click)="switchSplitter(';')">;</button>
+          <button *ngIf="this.split != ','" mat-menu-item (click)="switchSplitter(',')">,</button>
+          <input class="item-styling" mat-menu-item matInput placeholder="۞"
+                 (click)="$event.stopPropagation()" [(ngModel)]="this.split" (input)="switchSplitter($event.target.value)">
         </mat-menu>
       </div>
     </div>

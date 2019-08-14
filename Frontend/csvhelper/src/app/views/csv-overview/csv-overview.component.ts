@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ModelText} from '../../entities/model-text';
 import {ModelTextEnum} from '../../model-text.enum';
-import {HttpService} from '../../http.service';
-import {Globals} from '../../globals';
+import {HttpService} from '../../services/http.service';
 import {CsvOverviewBottomSheetComponent} from './csv-overview-bottom-sheet/csv-overview-bottom-sheet.component';
 import {MatBottomSheet} from '@angular/material';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-csv-overview',
@@ -14,15 +14,17 @@ import {MatBottomSheet} from '@angular/material';
 export class CsvOverviewComponent implements OnInit {
 
   active = false;
-  tableWare: string | ArrayBuffer;
   tableData = [];
   loading = false;
   split: string;
   modelText: ModelText;
 
-  constructor(private client: HttpService, private global: Globals, private bottomSheet: MatBottomSheet) {
-    this.split = this.global.splitter;
-    this.modelText = this.global.modelText;
+  constructor(private client: HttpService, private globalVariables: GlobalService, private bottomSheet: MatBottomSheet) {
+    this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
+    this.globalVariables.GlobalModelText.subscribe(value => this.modelText = value);
+    this.globalVariables.GlobalTableData.subscribe(value => this.tableData = value);
+    /*const test = new ModelText('AT', '123', '456', 'Nike', 'asdf', 'fdsa');
+    this.sendToService(test);*/
   }
 
   ngOnInit(): void {
@@ -53,7 +55,8 @@ export class CsvOverviewComponent implements OnInit {
     const filePicker = document.querySelector('#filePicker') as HTMLInputElement;
     if (table != null) {
       table.innerHTML = '';                               // löschung der Tabelle
-      this.tableWare = null;                              // löschung der Daten
+      this.tableData = [];
+      this.globalVariables.tableChange(this.tableData);
       table.parentNode.removeChild(table);                // entfernen des Tables
       filePicker.value = '';                              // löschen des Pfades
       // alert('Erfolgreich gelöscht');
@@ -73,7 +76,7 @@ export class CsvOverviewComponent implements OnInit {
       const rows = Array.from(table.rows);
       // schmeißt die erste Reihe weg
       rows.shift();
-      if (this.tableWare != null) {
+      if (this.tableData != null) {
         for (let i = 0; i < rows.length; i++) {
           const check = rows[i].firstElementChild.children[0] as HTMLInputElement;
           if (check.checked === true) {                     // ob input type checkbox true ist
@@ -83,6 +86,7 @@ export class CsvOverviewComponent implements OnInit {
             i--;                                            // da keine Löcher beim löschen entstehen muss eins zurück gesetzt werden
           }
         }
+        this.globalVariables.tableChange(this.tableData);
       }
       if (this.tableData.length === 0) {
         this.deleteTable();                                 // falls kein Datensatz mehr vorhanden ist löscht auch thead
@@ -90,19 +94,7 @@ export class CsvOverviewComponent implements OnInit {
     }
   }
 
-  fillTableWare(event: string | ArrayBuffer) {
-    // holt Daten von csv-reader.component
-    this.tableWare = event;
-  }
-
-  fillTableData(event) {
-    // holt aufgesplittet die Daten von csv-table.component
-    this.tableData = event;
-    this.split = this.global.splitter;
-  }
-
   settingForDropdown() {
-    console.log('hallo');
     // Aufruf des bottomSheet
     const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
       data: {linear: false}
@@ -121,7 +113,10 @@ export class CsvOverviewComponent implements OnInit {
           disableClose: true                            // Benuter soll denn bottomSheet nicht zu machen
         });
         // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
-        bottomSheetRef.afterDismissed().subscribe(() => this.arrayModelBuilder(dropdownArray).then(res => this.sendToService(res)));
+        bottomSheetRef.afterDismissed()
+            .subscribe(() => this.arrayModelBuilder(dropdownArray)
+            .then(res => this.sendToService(res))
+            .then(() => this.deleteModelText()));
       } else {
         alert('Bitte Dropdowns richtig füllen mit Modelnumber und Text!!!');
       }
@@ -132,9 +127,13 @@ export class CsvOverviewComponent implements OnInit {
 
   rowChooseArrayBuilder() {
     const btnSelector = [];
-    for (let i = 0; i < this.tableData[1].split(this.split).length; i++) {
-      const btn = document.getElementById('ddBtn' + i).textContent;             // holt sich alle Elemente von der dd Menu
-      btnSelector.push(ModelTextEnum[btn]);                                              // Speicher alles
+    try {
+      for (let i = 0; i <= this.tableData[1].split(this.split).length - 1; i++) {
+        const btn = document.getElementById('ddBtn' + i).textContent;             // holt sich alle Elemente von der dd Menu
+        btnSelector.push(ModelTextEnum[btn]);                                              // Speicher alles
+      }
+    } catch (e) {
+      console.log(e);
     }
     return btnSelector;
   }
@@ -166,7 +165,7 @@ export class CsvOverviewComponent implements OnInit {
         // schaut ob element überhaupt vorhanden um Exeption zu umgehen dann
         // die Suche nach dem Element im string falls element nicht vorhanden default value
         (dropdownOrder.find(p => p === order[0]) ? colm[dropdownOrder.indexOf(order[0])] : this.modelText.DltCountryCode),
-        (dropdownOrder.find(p => p === order[1]) ? colm[dropdownOrder.indexOf(order[1])] : this.modelText.SupplierId),
+        (dropdownOrder.find(p => p === order[1]) ? colm[dropdownOrder.indexOf(order[1])] : this.modelText.SupplierID),
         (dropdownOrder.find(p => p === order[2]) ? colm[dropdownOrder.indexOf(order[2])] : this.modelText.Brand),
         (dropdownOrder.find(p => p === order[3]) ? colm[dropdownOrder.indexOf(order[3])] : this.modelText.ModelNumber),
         (dropdownOrder.find(p => p === order[4]) ? colm[dropdownOrder.indexOf(order[4])] : this.modelText.Description),
@@ -176,8 +175,12 @@ export class CsvOverviewComponent implements OnInit {
     return resultList;
   }
 
+  async deleteModelText() {
+    this.globalVariables.modelTextChange(new ModelText('AT', '', '', '', '', ''));
+    this.deleteTable();
+  }
+
   async sendToService(result) {
-    console.log(result);
-    await HttpService.sendModelTextData(result);
+    await this.client.sendModelTextData(result);
   }
 }

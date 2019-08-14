@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {it} from '@angular/core/testing/src/testing_internal';
-import {Globals} from '../../../globals';
+import {GlobalService} from '../../../services/global.service';
 
 @Component({
   selector: 'app-table-edit-popup',
@@ -13,8 +12,8 @@ export class TableEditPopupComponent implements OnInit {
   arrayList = [];
 
   constructor(public dialogRef: MatDialogRef<TableEditPopupComponent>, @Inject(MAT_DIALOG_DATA) public data: string,
-              private global: Globals) {
-    this.split = this.global.splitter;
+              private globalVariables: GlobalService) {
+    this.globalVariables.GlobalSplit.subscribe(value => this.split = value);
   }
 
   ngOnInit() {
