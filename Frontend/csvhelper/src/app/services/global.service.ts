@@ -7,7 +7,7 @@ import {ModelText} from '../entities/model-text';
 })
 export class GlobalService {
   splitter = ';';
-  modelText: ModelText = new ModelText('AT', '0', '0', '0', '0', '0');
+  modelText: ModelText = new ModelText('AT', '', '', '', '0', '0');
   globalSplit: BehaviorSubject<string>;
   globalModelText: BehaviorSubject<ModelText>;
   globalTableData: BehaviorSubject<string[]>;
