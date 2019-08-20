@@ -5,14 +5,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HttpService {
-  my = 'https://clearingcenter.sport2000.at/PutModelTextApi';
+  my = 'https://clearingcenter.sport2000.at/PutModelTextApi/api/modelText';
   first = 'http://localhost:57713/api/modelText';
   constructor() { }
 
   async sendModelTextData(data) {
     // async fetching works at post response come in with status
-    await fetch(this.first, {
+    await fetch(this.my, {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify(data),                           // do data convert to Json
       headers: {
         'Content-Type': 'application/json'
