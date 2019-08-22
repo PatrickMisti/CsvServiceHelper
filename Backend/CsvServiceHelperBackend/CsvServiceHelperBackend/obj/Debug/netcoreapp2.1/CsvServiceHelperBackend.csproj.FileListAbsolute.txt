@@ -11,7 +11,6 @@ C:\Work\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelper
 C:\Work\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.RazorTargetAssemblyInfo.cache
 C:\Work\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.dll
 C:\Work\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.pdb
-C:\Work\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.csprojAssemblyReference.cache
 C:\Home\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\bin\Debug\netcoreapp2.1\CsvServiceHelperBackend.deps.json
 C:\Home\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\bin\Debug\netcoreapp2.1\CsvServiceHelperBackend.runtimeconfig.json
 C:\Home\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\bin\Debug\netcoreapp2.1\CsvServiceHelperBackend.runtimeconfig.dev.json
@@ -26,3 +25,4 @@ C:\Home\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelper
 C:\Home\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.RazorTargetAssemblyInfo.cache
 C:\Home\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.dll
 C:\Home\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.pdb
+C:\Work\GitHub\CsvServiceHelper\Backend\CsvServiceHelperBackend\CsvServiceHelperBackend\obj\Debug\netcoreapp2.1\CsvServiceHelperBackend.csprojAssemblyReference.cache

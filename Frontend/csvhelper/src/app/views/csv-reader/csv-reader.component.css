@@ -1,9 +1,13 @@
 .container-styling {
   margin-top: 8%;
+  min-height: 7vh;
 }
 .card-styling {
-  min-height: 10vh;
   display: flex;
+  border: 1px solid;
+  border-radius: 15px;
+  position: relative;
+  min-height: 9vh;
 }
 .element-styling {
   height: 100%;
@@ -16,7 +20,7 @@
 }
 .input-styling {
   width: 100%;
-  height: 60%;
+  min-height: 60%;
   margin-top: 15px;
   border-radius: 5px;
   border: 2px solid black;
@@ -31,14 +35,17 @@
   border-radius: 30px;
   background: darkred;
   color: white;
+  padding-bottom: 5px;
 }
 .btn-split-styling {
-  margin-top: 1.5em;
+  margin-top: 0.7em;
+  min-height: 70%;
   font-size: 16px;
   font-weight: bolder;
   border-radius: 30px;
   background: darkred;
   color: white;
+  padding-bottom: 5px;
 }
 td {
   font-size: 18px;

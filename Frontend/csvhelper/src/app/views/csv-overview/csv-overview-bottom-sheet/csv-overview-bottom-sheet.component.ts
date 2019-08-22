@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModelTextEnum} from '../../../model-text.enum';
 import {ModelText} from '../../../entities/model-text';
 import {GlobalService} from '../../../services/global.service';
+import {Utils} from '../../../services/Utils';
 
 @Component({
   selector: 'app-csv-overview-bottom-sheet',
@@ -33,47 +34,54 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // liste von ModelTextEnum Elementen
-    this.list = (Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number')).splice(1);
-    // nur die ersten drei sind wichtig
-    this.list.splice(this.list.length / 2, this.list.length);
-    // umwandlung von der Entity zu einer Liste
-    this.placeholderList = Object.values(this.modelText);
-    // nur die ersten drei sind wichtig
-    this.placeholderList.splice(this.placeholderList.length / 2, this.placeholderList.length);
-    // übergibt dropdownMenu von overview
-    this.dropdownArray = this.data.ddMenu;
+    console.log('hallo');
     // übergibt ob stepper frei oder gesperrt ist
     this.linear = this.data.linear;
-    let counter = -1;
-    // FormArray für jedes Element im Placeholder
-    this.myArray = new FormArray(this.placeholderList.map(() => {
-      counter++;
-      // falls nicht im placeholder ist
-      try {
-        if (this.placeholderList[counter] === '' && !this.dropdownArray.find(p => p === ModelText.getOrder()[counter])) {
-          return this.formBuilder.group({validators: ['', Validators.required]});      // required setzten
-        } else {
-          return this.formBuilder.group({validators: ['.', !Validators.required]});    // sonst nicht
-        }
-      } catch (e) {
-        return this.formBuilder.group({validators: ['.', !Validators.required]});    // sonst nicht
-      }
-    }));
+    // übergibt dropdownMenu von overview
+    this.dropdownArray = this.data.ddMenu;
+
+    // umwandlung von der Entity zu einer Liste
+    this.placeholderList = Object.values(this.modelText);
+/***************************************verbessern placeholder****************************************/
+    // liste von ModelTextEnum Elementen
+    this.list = (Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number')).splice(1);
+    if (this.linear) {
+      this.list = this.list.map((res, index) => !this.dropdownArray[index] ? res : undefined)
+          .filter(p => p !== undefined);
+      this.placeholderList = this.dropdownArray
+          .map((res, index) => !res ? this.placeholderList[index] : undefined)
+          .filter(p => p !== undefined);
+    } else {
+      this.list = this.list.filter(p => p !== ModelTextEnum[4].toString() && p !== ModelTextEnum[5] && p !== ModelTextEnum[6]);
+      this.placeholderList.splice(this.placeholderList.length / 2, this.placeholderList.length);
+    }
+    this.myArray = new FormArray(this.list.map((res) => this.formBuilder.group({validators: ['', Validators.required]})));
   }
 
   safeGlobalModelText() {
     // füllt global ModelText
     this.fillGlobalModelText();
-    this.bottomSheetRef.dismiss();
+    if (this.linear === true) {
+      this.spinnerMethode();
+    } else {
+      this.bottomSheetRef.dismiss();
+    }
   }
 
   fillGlobalModelText() {
     const modelText = this.modelText;              // füllt modelText global
     const orderList = ModelText.getOrder();
-    modelText.dltCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
-    modelText.supplierID = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
-    modelText.brand = (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value;
+    try {
+      modelText.dltCountryCode = (!this.linear) || (this.linear && !this.dropdownArray[0]) ?
+          (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value :
+          modelText.dltCountryCode;
+      modelText.supplierID = (!this.linear) || (this.linear && !this.dropdownArray[1]) ?
+          (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value :
+          modelText.supplierID;
+      modelText.brand = (!this.linear) || (this.linear && !this.dropdownArray[2]) ?
+          (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value :
+          modelText.brand;
+    } catch (e) {}
     this.globalVariables.modelTextChange(this.modelText);
   }
 
@@ -97,19 +105,23 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
           inputs.forEach(v => {
             valu.push((v as HTMLInputElement).value);                       // hollt sich alle Ergebnisse von denn Inputs
           });
-          // tslint:disable-next-line:max-line-length
-          knapp.disabled = CsvOverviewBottomSheetComponent.btnCheckForForm(valu, dds);                      // disabled Speicher Btn nur wenn nicht im Input steht
+          // disabled Speicher Btn nur wenn nicht im Input steht
+          knapp.disabled = CsvOverviewBottomSheetComponent.btnCheckForForm(valu, dds);
         });
       }
-      if (this.data.btnDisable === 1) {
-        document.getElementById('spinner-form').classList.remove('spinner-style-toggle');
-        document.getElementById('input-form').classList.add('spinner-style-toggle');
-        sleep(2000).then(() => this.bottomSheetRef.dismiss());       // falls alles schon gesetzt ist bottomSheet close
+      if (this.dropdownArray.filter(p => p === true).length === 6) {
+        this.spinnerMethode();
       }
     } else {
       const knapp = document.querySelector('#submitBtn') as HTMLButtonElement;
       knapp.disabled = false;
     }
+  }
+
+  async spinnerMethode() {
+    document.getElementById('spinner-form').classList.remove('spinner-style-toggle');
+    document.getElementById('input-form').classList.add('spinner-style-toggle');
+    sleep(2000).then(() => this.bottomSheetRef.dismiss());       // falls alles schon gesetzt ist bottomSheet close
   }
 }
 async function sleep(ms: number) {

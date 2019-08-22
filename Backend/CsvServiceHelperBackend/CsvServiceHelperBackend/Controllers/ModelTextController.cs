@@ -14,7 +14,7 @@ namespace CsvServiceHelperBackend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("csv")]
-    public class ModelTextsController : ControllerBase
+    public class ModelTextController : ControllerBase
     {
         UnitOfWork repo = new UnitOfWork();
 

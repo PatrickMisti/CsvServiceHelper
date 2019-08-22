@@ -5,21 +5,21 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HttpService {
-  yours = 'http://clearingcenter.sport2000.at/putModelTextservice/service.asmx?wsdl';
-  my = 'http://localhost:57713/api/modeltexts';
-  urlModelText = this.my;
-  /*private GLN = '9120048150008';
-  private Password = '@V5mtKF0j§';*/
-
+  my = 'https://clearingcenter.sport2000.at/PutModelTextApi/api/modelText';
+  first = 'http://localhost:57713/api/modelText';
   constructor() { }
 
   async sendModelTextData(data) {
+    // async fetching works at post response come in with status
     await fetch(this.my, {
       method: 'POST',
-      body: JSON.stringify(data),
+      mode: 'no-cors',
+      body: JSON.stringify(data),                           // do data convert to Json
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(res => alert(res.status)).catch((error) => console.log(error));
+    }).then(res => res.status === 200 ? alert('Gespeichert!!!!!') : null)
+        .catch((error) => alert(error));
+    // if it fail
   }
 }
