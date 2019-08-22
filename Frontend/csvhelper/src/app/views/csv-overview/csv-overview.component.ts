@@ -115,8 +115,7 @@ export class CsvOverviewComponent implements OnInit {
         // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
         bottomSheetRef.afterDismissed()
             .subscribe(() => this.arrayModelBuilder(dropdownList, booleanBtn)
-            /*.then(res => this.sendToService(res))*/
-                .then(res => console.log(res))
+                .then(res => this.sendToService(res))
                 .then(() => this.deleteModelText()));
       } else {
         alert('ModelNumber und Beschreibung fehlen!!!');

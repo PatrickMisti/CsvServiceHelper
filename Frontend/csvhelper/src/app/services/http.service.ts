@@ -18,7 +18,8 @@ export class HttpService {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(res => res.status === 200 ? alert('Gespeichert!!!!!') : null).catch((error) => alert(error));
+    }).then(res => res.status === 200 ? alert('Gespeichert!!!!!') : null)
+        .catch((error) => alert(error));
     // if it fail
   }
 }
