@@ -104,32 +104,6 @@ export class CsvOverviewComponent implements OnInit {
     bottomSheetRef.afterDismissed().subscribe();
   }
 
-  /*safeTable() {
-    console.log('hallo');
-    this.safe();
-    let results;                  // wir gebraucht für den rowChecker
-    if (this.tableData.length !== 0) {
-      const dropdownArray = this.rowChooseArrayBuilder();                       // holt sich alles
-      results = this.rowChecker(dropdownArray);
-      if (results > 0) {
-        const bottomSheetRef = this.bottomSheet.open(CsvOverviewBottomSheetComponent, {
-          data: {linear: true, btnDisable: results, ddMenu: dropdownArray},
-          disableClose: true                            // Benuter soll denn bottomSheet nicht zu machen
-        });
-        // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
-        bottomSheetRef.afterDismissed()
-            .subscribe(() => this.arrayModelBuilder(dropdownArray)
-            /!*.then(res => this.sendToService(res))*!/
-                .then(res => console.log(res))
-                .then(() => this.deleteModelText()));
-      } else {
-        alert('Bitte Dropdowns richtig füllen mit Modelnumber und Text!!!');
-      }
-    } else {
-      alert('Keine Daten vorhanden!!!');
-    }
-  }*/
-
   safeTable() {
     if (this.tableData.length !== 0) {
       const {booleanBtn, dropdownList} = this.dropdownArrayBuilder();
@@ -140,7 +114,7 @@ export class CsvOverviewComponent implements OnInit {
         });
         // wenn sheet geschlossen wird soll das Array mit dem ModelText entity ersetzt werden und dann alles gleich versenden alles async
         bottomSheetRef.afterDismissed()
-            .subscribe(() => this.arrayModelBuilder(dropdownList)
+            .subscribe(() => this.arrayModelBuilder(dropdownList, booleanBtn)
             /*.then(res => this.sendToService(res))*/
                 .then(res => console.log(res))
                 .then(() => this.deleteModelText()));
@@ -161,32 +135,7 @@ export class CsvOverviewComponent implements OnInit {
     return {booleanBtn, dropdownList};
   }
 
-  /*rowChooseArrayBuilder() {
-    const btnSelector = [];
-    for (let i = 0; i <= this.tableData[1].split(this.split).length - 1; i++) {
-      const btn = document.getElementById('ddBtn' + i).textContent;             // holt sich alle Elemente von der dd Menu
-      btnSelector.push(ModelTextEnum[btn]);                                              // Speicher alles
-    }
-    return btnSelector;
-  }
-
-  rowChecker(btnSelector) {
-    const order = ModelText.getOrder();         // hold sich die Reihenfolge vom Object
-    let bool = 1;                               // wichtig für bottomSheet
-    btnSelector.map(item => {
-      if (order.find(p => p === item) === undefined && bool >= -1) {        // untersucht ob von der dd Auswahl das Element vorhanden ist
-        bool = -1;                                                             // -1 eines oder mehrere Elemente nicht gefunden
-      }
-    });
-    // wenn bool = -1 ist gibt es noch die Chance das die Wichtigen Sachen vorhanden sind
-    if (btnSelector.find(p => p === ModelTextEnum.ModelNumber) && btnSelector.find(p => p === ModelTextEnum.Description)
-        && bool !== 1 && btnSelector.length === 2) {
-      bool = 2;                         // wichtig für bottomSheet
-    }
-    return bool;
-  }*/
-
-  async arrayModelBuilder(dropdownOrder) {
+  async arrayModelBuilder(dropdownOrder, booleanBtn) {
     // String zu Entity konvertieren
     const resultList = [];
     // genau einmal die Ganze liste
@@ -197,12 +146,18 @@ export class CsvOverviewComponent implements OnInit {
       resultList.push(new ModelText(                            // Befüllen der Liste
         // schaut ob element überhaupt vorhanden um Exeption zu umgehen dann
         // die Suche nach dem Element im string falls element nicht vorhanden default value
-        (dropdownOrder.find(p => p === order[0]) ? colm[dropdownOrder.indexOf(order[0])] : this.modelText.DltCountryCode),
-        (dropdownOrder.find(p => p === order[1]) ? colm[dropdownOrder.indexOf(order[1])] : this.modelText.SupplierID),
-        (dropdownOrder.find(p => p === order[2]) ? colm[dropdownOrder.indexOf(order[2])] : this.modelText.Brand),
-        (dropdownOrder.find(p => p === order[3]) ? colm[dropdownOrder.indexOf(order[3])] : this.modelText.ModelNumber),
-        (dropdownOrder.find(p => p === order[4]) ? colm[dropdownOrder.indexOf(order[4])] : this.modelText.Description),
-        (dropdownOrder.find(p => p === order[5]) ? colm[dropdownOrder.indexOf(order[5])] : this.modelText.Text),
+        (dropdownOrder.find(p => p === ModelTextEnum[order[0]]) ?
+            colm[dropdownOrder.indexOf(ModelTextEnum[order[0]])] : this.modelText.DltCountryCode),
+        (dropdownOrder.find(p => p === ModelTextEnum[order[1]]) ?
+            colm[dropdownOrder.indexOf(ModelTextEnum[order[1]])] : this.modelText.SupplierID),
+        (dropdownOrder.find(p => p === ModelTextEnum[order[2]]) ?
+            colm[dropdownOrder.indexOf(ModelTextEnum[order[2]])] : this.modelText.Brand),
+        (dropdownOrder.find(p => p === ModelTextEnum[order[3]]) ?
+            colm[dropdownOrder.indexOf(ModelTextEnum[order[3]])] : this.modelText.ModelNumber),
+        (dropdownOrder.find(p => p === ModelTextEnum[order[4]]) ?
+            colm[dropdownOrder.indexOf(ModelTextEnum[order[4]])] : this.modelText.Description),
+        (dropdownOrder.find(p => p === ModelTextEnum[order[5]]) ?
+            colm[dropdownOrder.indexOf(ModelTextEnum[order[5]])] : this.modelText.Text),
       ));
     });
     return resultList;

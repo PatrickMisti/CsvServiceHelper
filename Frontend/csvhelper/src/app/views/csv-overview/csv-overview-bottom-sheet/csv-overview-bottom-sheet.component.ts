@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModelTextEnum} from '../../../model-text.enum';
 import {ModelText} from '../../../entities/model-text';
 import {GlobalService} from '../../../services/global.service';
+import {Utils} from '../../../services/Utils';
 
 @Component({
   selector: 'app-csv-overview-bottom-sheet',
@@ -41,16 +42,18 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
 
     // umwandlung von der Entity zu einer Liste
     this.placeholderList = Object.values(this.modelText);
-    // nur die ersten drei sind wichtig
-    this.placeholderList.splice(this.placeholderList.length / 2, this.placeholderList.length);
-
+/***************************************verbessern placeholder****************************************/
     // liste von ModelTextEnum Elementen
     this.list = (Object.keys(ModelTextEnum).filter(k => typeof ModelTextEnum[k as any] === 'number')).splice(1);
     if (this.linear) {
       this.list = this.list.map((res, index) => !this.dropdownArray[index] ? res : undefined)
           .filter(p => p !== undefined);
+      this.placeholderList = this.dropdownArray
+          .map((res, index) => !res ? this.placeholderList[index] : undefined)
+          .filter(p => p !== undefined);
     } else {
       this.list = this.list.filter(p => p !== ModelTextEnum[4].toString() && p !== ModelTextEnum[5] && p !== ModelTextEnum[6]);
+      this.placeholderList.splice(this.placeholderList.length / 2, this.placeholderList.length);
     }
     this.myArray = new FormArray(this.list.map((res) => this.formBuilder.group({validators: ['', Validators.required]})));
   }
@@ -69,9 +72,15 @@ export class CsvOverviewBottomSheetComponent implements OnInit, AfterViewInit {
     const modelText = this.modelText;              // füllt modelText global
     const orderList = ModelText.getOrder();
     try {
-      modelText.dltCountryCode = (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value;
-      modelText.supplierID = (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value;
-      modelText.brand = (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value;
+      modelText.dltCountryCode = (!this.linear) || (this.linear && !this.dropdownArray[0]) ?
+          (document.getElementById(ModelTextEnum[orderList[0]]) as HTMLInputElement).value :
+          modelText.dltCountryCode;
+      modelText.supplierID = (!this.linear) || (this.linear && !this.dropdownArray[1]) ?
+          (document.getElementById(ModelTextEnum[orderList[1]]) as HTMLInputElement).value :
+          modelText.supplierID;
+      modelText.brand = (!this.linear) || (this.linear && !this.dropdownArray[2]) ?
+          (document.getElementById(ModelTextEnum[orderList[2]]) as HTMLInputElement).value :
+          modelText.brand;
     } catch (e) {}
     this.globalVariables.modelTextChange(this.modelText);
   }

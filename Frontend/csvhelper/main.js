@@ -21,7 +21,8 @@ function createWindow () {
     url.format({
       pathname: path.join(__dirname, `/dist/index.html`),
       protocol: "file:",
-      slashes: true
+      slashes: true,
+      icon: __dirname + './assets/Sport_2000_rbg.jpg'
     })
   );
 
