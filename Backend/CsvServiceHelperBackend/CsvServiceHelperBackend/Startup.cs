@@ -29,7 +29,7 @@ namespace CsvServiceHelperBackend
             services.AddCors(o => o.AddPolicy("csv", b =>
             {
                 b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-
+                b.WithOrigins("http://localhost:4200");
             }));
         }
 
@@ -44,7 +44,7 @@ namespace CsvServiceHelperBackend
             {
                 app.UseHsts();
             }
-            app.UseCors();
+            app.UseCors("csv");
             app.UseHttpsRedirection();
             app.UseMvc();
         }
