@@ -15,9 +15,7 @@ namespace CsvServiceHelperBackend.Persistence
         public UnitOfWork()
         {
             db = new ModelTextDbContext();
-            db.Database.EnsureCreated();
             modelTextUow = new RepositoryUow<ModelText, ModelTextDbContext>(db);
-
         }
 
         public IEnumerable<ModelText> getAllModelText()
