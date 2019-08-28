@@ -23,7 +23,7 @@ In the http.service.ts file you find the method where you can make changes on th
     * [Suggestion](http://mylifeforthecode.com/using-electron-packager-to-package-an-electron-app/)
     * Or run `npm run pack --platform=win32`
     * Or run `npm run pack --platform=darwin`
-    * You also can change the icon, only attach `--icon=`path
+    * You also can change the icon, only attach `--icon=` **path**
 
 ## 5. Conclusion
 Internship Sport 2000
