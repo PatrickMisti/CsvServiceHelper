@@ -105,6 +105,7 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   safeTable() {
+    console.log('hallo');
     if (this.tableData.length !== 0) {
       const {booleanBtn, dropdownList} = this.dropdownArrayBuilder();
       if (booleanBtn[3] && booleanBtn[4]) {
@@ -126,7 +127,9 @@ export class CsvOverviewComponent implements OnInit {
   }
 
   dropdownArrayBuilder() {
-    const table = this.tableData[1].split(this.split);
+    const r1 = this.tableData[0].split(this.split);
+    const r2 = this.tableData[1].split(this.split);
+    const table = r1.length > r2.length ? r2 : r1;
     const dropdownList = table.map((res, index) => document.getElementById('ddBtn' + index).innerText);
     let booleanBtn = ModelText.getOrder().map(res => !!(dropdownList.find(p => p === ModelTextEnum[res])));
     booleanBtn = Object.values(this.modelText).map((value, index) => (value !== '' || booleanBtn[index] === true));
