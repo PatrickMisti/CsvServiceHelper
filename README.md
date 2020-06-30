@@ -21,8 +21,8 @@ In the http.service.ts file you find there a method where you can make changes o
 ## 4. Deployment
   * [Angular App](https://angular.io/guide/deployment)
   * Electron app 
-    * Or run `npm run pack --platform=win32`
-    * Or run `npm run pack --platform=darwin`
+    * Microsoft - run `npm run pack --platform=win32`
+    * Linux - run `npm run pack --platform=darwin`
     * You also can change the icon, only attach `--icon=` **path**
 
 ## 5. Conclusion
