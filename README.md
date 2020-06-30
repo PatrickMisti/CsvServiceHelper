@@ -1,4 +1,5 @@
 # CsvServiceHelper - Sport 2000 AT
+
 ## 1. Install
   1. [NodeJs](https://nodejs.org/en/)
   2. [Angular CLI](https://cli.angular.io/)
@@ -8,12 +9,12 @@
      * etc.
 
 ## 2. Download Project
-In this Directory are to Project's. One for backend and another one the angular client.
+In this Project are two Directories. One for backend and another one the angular client.
 Both of them have a README.md with a link to here.
 
 ## 3. Open Project
 If you want to make changes on the HTTPService on the client. Go to the src/app/services Directory.
-In the http.service.ts file you find the method where you can make changes on the Url.
+In the http.service.ts file you find there a method where you can make changes on the Url.
 
 **Hint: Before you do something go to the console and enter npm install to download all packages.**
 
@@ -27,4 +28,4 @@ In the http.service.ts file you find the method where you can make changes on th
 
 ## 5. Conclusion
 Internship Sport 2000
-Year 2019 sec July till end August
+Year 2019
